@@ -53,9 +53,14 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/@mdi/font/css/materialdesignicons.min.css"
+              "node_modules/@mdi/font/css/materialdesignicons.min.css",
+              "node_modules/codemirror/lib/codemirror.css",
+              "node_modules/codemirror/theme/dracula.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/codemirror/lib/codemirror.js",
+              "node_modules/codemirror/mode/javascript/javascript.js"
+            ]
           },
           "configurations": {
             "production": {
