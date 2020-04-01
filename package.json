@@ -1,17 +1,83 @@
 {
   "name": "lucid-json",
   "version": "0.0.0",
+  "description": "json editor",
+  "main": "dist/electron/index.js",
+  "author": {
+    "name": "Alexander Acebo",
+    "email": "aacebowork@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aacebo/lucid-json.git"
+  },
   "scripts": {
+    "postinstall": "electron-builder install-app-deps",
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run build && electron .",
+    "start:prod": "npm run build:prod && electron .",
+    "build": "rimraf dist && ng build && npm run build:electron",
+    "build:prod": "rimraf dist && ng build --prod && npm run build:electron",
+    "build:electron": "tsc -p src/electron",
+    "build:uniform": "ng build uniform",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "publish": "rimraf pkg && npm run build:prod && npm run sign && electron-builder -ml --publish always",
+    "pkg": "rimraf pkg && npm run build:prod && npm run sign && electron-builder",
+    "pkg:all": "rimraf pkg && npm run build:prod && npm run sign && electron-builder -ml",
+    "pkg:win": "rimraf pkg && npm run build:prod && npm run sign && electron-builder --win",
+    "pkg:mac": "rimraf pkg && npm run build:prod && npm run sign && electron-builder --mac",
+    "pkg:linux": "rimraf pkg && npm run build:prod && npm run sign && electron-builder --linux",
+    "sign": "export CSC_LINK=$(pwd)\"/kido-dev-signed-cert.p12\" && export CSC_KEY_PASSWORD=\"password\""
+  },
+  "build": {
+    "appId": "Lucid.json",
+    "productName": "Lucid.json",
+    "files": [
+      "dist"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "aacebo"
+      }
+    ],
+    "directories": {
+      "output": "pkg",
+      "buildResources": "dist/assets"
+    },
+    "mac": {
+      "icon": "logo/png/512x512.png",
+      "category": "public.json"
+    },
+    "linux": {
+      "icon": "logo/png/512x512.png",
+      "category": "development.debugger",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.1.0",
+    "@angular/cdk": "^9.2.0",
     "@angular/common": "~9.1.0",
     "@angular/compiler": "~9.1.0",
     "@angular/core": "~9.1.0",
@@ -19,6 +85,15 @@
     "@angular/platform-browser": "~9.1.0",
     "@angular/platform-browser-dynamic": "~9.1.0",
     "@angular/router": "~9.1.0",
+    "@mdi/font": "^5.0.45",
+    "@ngrx/effects": "^9.0.0",
+    "@ngrx/router-store": "^9.0.0",
+    "@ngrx/store": "^9.0.0",
+    "@ngrx/store-devtools": "^9.0.0",
+    "@uniform/components": "^0.0.2-rc.1",
+    "dotenv": "^8.2.0",
+    "electron-devtools-installer": "^2.2.4",
+    "electron-is-dev": "^1.1.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
@@ -28,10 +103,12 @@
     "@angular/cli": "~9.1.0",
     "@angular/compiler-cli": "~9.1.0",
     "@angular/language-service": "~9.1.0",
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "electron": "~6.1.2",
+    "electron-builder": "^22.4.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.4.1",

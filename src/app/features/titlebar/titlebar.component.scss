@@ -1,0 +1,13 @@
+@import '../../../styles/variables';
+
+:host {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+
+  display: block;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: transparent;
+  height: $titlebar-height;
+}
