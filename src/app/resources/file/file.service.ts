@@ -12,16 +12,16 @@ import * as actions from './actions';
 })
 export class FileService {
   readonly state$: Observable<IFileState>;
-  readonly files$: Observable<{ [id: string]: IFile }>;
-  readonly ids$: Observable<string[]>;
+  readonly files$: Observable<{ [path: string]: IFile }>;
+  readonly paths$: Observable<string[]>;
 
   constructor(private readonly _store$: Store<IFileState>) {
     this.state$ = this._store$.pipe(select(selectors.selectState));
     this.files$ = this._store$.pipe(select(selectors.selectFiles));
-    this.ids$ = this._store$.pipe(select(selectors.selectIds));
+    this.paths$ = this._store$.pipe(select(selectors.selectPaths));
   }
 
-  add(file: File) {
-    this._store$.dispatch(actions.add({ file }));
+  set(name: string, path: string, text: string) {
+    this._store$.dispatch(actions.set({ name, path, text }));
   }
 }

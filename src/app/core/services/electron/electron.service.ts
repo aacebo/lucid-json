@@ -5,6 +5,7 @@ import {
   IpcRenderer,
   MenuItemConstructorOptions,
   Remote,
+  OpenDialogOptions,
 } from 'electron';
 
 @Injectable({
@@ -67,5 +68,9 @@ export class ElectronService {
 
   getGlobal<T = any>(prop: string) {
     return this._remote.getGlobal(prop) as T;
+  }
+
+  showOpenDialog(options: OpenDialogOptions) {
+    return this._remote.dialog.showOpenDialog(options);
   }
 }

@@ -1,3 +1,5 @@
-export interface IFile extends File {
-  readonly id: string;
+export interface IFile {
+  readonly name: string;
+  readonly path: string;
+  readonly text: string;
 }

@@ -6,6 +6,7 @@ import * as path from 'path';
 import * as url from 'url';
 
 import { AppMenu } from './menu';
+import { File } from './file';
 
 dotenv.config({
   debug: dev,
@@ -24,6 +25,8 @@ function getSystem() {
 let app: App;
 
 class App {
+  readonly file: File;
+
   private _window: electron.BrowserWindow;
   private _menu = new AppMenu();
 
@@ -45,6 +48,8 @@ class App {
         backgroundThrottling: false,
       },
     });
+
+    this.file = new File(this._window);
 
     this._menu.click$.subscribe(v => {
       this._window.webContents.send(v.cmd, v.data);

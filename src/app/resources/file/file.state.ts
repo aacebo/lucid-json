@@ -4,7 +4,7 @@ import { IFile } from './models';
 import * as fromReducers from './reducers';
 
 export interface IFileState {
-  readonly files: { [id: string]: IFile };
+  readonly files: { [path: string]: IFile };
 }
 
 export function reducers(state: IFileState, action: Action) {

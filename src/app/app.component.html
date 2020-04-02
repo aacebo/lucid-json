@@ -1,3 +1,14 @@
 <luc-titlebar
   *ngIf="(systemService.isMac$ | async)"
 ></luc-titlebar>
+
+<uni-tab-group *ngIf="fileService.files$ | async; let files">
+  <uni-tab
+    *ngFor="let path of fileService.paths$ | async"
+    [label]="files[path]?.name"
+  >
+    <ng-template uniTabBody>
+      {{ files[path]?.text | json }}
+    </ng-template>
+  </uni-tab>
+</uni-tab-group>
