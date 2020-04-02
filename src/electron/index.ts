@@ -5,6 +5,8 @@ import * as dev from 'electron-is-dev';
 import * as path from 'path';
 import * as url from 'url';
 
+import { AppMenu } from './menu';
+
 dotenv.config({
   debug: dev,
   path: `${__dirname}/../.env`,
@@ -23,6 +25,7 @@ let app: App;
 
 class App {
   private _window: electron.BrowserWindow;
+  private _menu = new AppMenu();
 
   constructor() {
     this._window = new electron.BrowserWindow({
@@ -41,6 +44,10 @@ class App {
         nodeIntegration: true,
         backgroundThrottling: false,
       },
+    });
+
+    this._menu.click$.subscribe(v => {
+      this._window.webContents.send(v.cmd, v.data);
     });
 
     this._window.loadURL(url.format({

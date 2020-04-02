@@ -19,5 +19,9 @@ export class AppComponent implements OnInit {
     this._electronService.on('system', (system: ISystem) => {
       this.systemService.setSystem(system);
     });
+
+    this._electronService.on('open', () => {
+      console.log('open');
+    });
   }
 }
