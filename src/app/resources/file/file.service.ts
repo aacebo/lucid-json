@@ -32,4 +32,8 @@ export class FileService {
   setActive(path: string) {
     this._store$.dispatch(actions.setActive({ path }));
   }
+
+  update(path: string, text: string) {
+    this._store$.dispatch(actions.update({ path, text }));
+  }
 }

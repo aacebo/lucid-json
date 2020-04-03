@@ -3,11 +3,10 @@ import {
   ChangeDetectionStrategy,
   ElementRef,
   ViewChild,
-  Input,
-  ChangeDetectorRef,
   ViewEncapsulation,
   OnDestroy,
 } from '@angular/core';
+import { UniFormFieldControlBase, uniFormFieldProvider } from '@uniform/components';
 
 import CodeMirror from 'codemirror';
 import 'codemirror/addon/edit/closebrackets.js';
@@ -24,18 +23,11 @@ import 'codemirror/addon/selection/mark-selection.js';
   template: `<textarea #textarea></textarea>`,
   styleUrls: ['./json-editor.component.scss'],
   host: { class: 'luc-json-editor' },
+  providers: [uniFormFieldProvider(JsonEditorComponent)],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class JsonEditorComponent implements OnDestroy {
-  @Input()
-  get value() { return this._value; }
-  set value(v) {
-    this._value = v;
-    this._cdr.markForCheck();
-  }
-  private _value?: string;
-
+export class JsonEditorComponent extends UniFormFieldControlBase<string> implements OnDestroy {
   @ViewChild('textarea')
   get textarea() { return this._textarea; }
   set textarea(v) {
@@ -62,9 +54,20 @@ export class JsonEditorComponent implements OnDestroy {
   }
   private _textarea: ElementRef<HTMLTextAreaElement>;
 
-  editor: CodeMirror.EditorFromTextArea;
+  get value() { return this._value; }
+  set value(v) {
+    this._value = v;
 
-  constructor(private readonly _cdr: ChangeDetectorRef) { }
+    if (this.editor && v && v !== this.editor.getValue()) {
+      this.editor.setValue(v);
+    }
+
+    this.cdr.markForCheck();
+    this.onChange(v);
+  }
+  protected _value?: string;
+
+  editor: CodeMirror.EditorFromTextArea;
 
   ngOnDestroy() {
     if (this.editor) {

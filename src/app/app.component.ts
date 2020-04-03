@@ -11,6 +11,11 @@ import { FileService, File } from './resources/file';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
+  readonly flex = {
+    left: '100%',
+    right: '0',
+  };
+
   constructor(
     readonly systemService: SystemService,
     readonly fileService: FileService,
@@ -38,5 +43,14 @@ export class AppComponent implements OnInit {
       this.fileService.set(e.name, e.path, e.text);
       this._cdr.markForCheck();
     });
+  }
+
+  onViewTree() {
+    this.flex.left = '50%';
+    this.flex.right = '50%';
+  }
+
+  onTextChange(e: string, path: string) {
+    this.fileService.update(path, e);
   }
 }

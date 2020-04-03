@@ -1,8 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { UniIconModule, UniIconService, UniTabModule, UniScrollModule, UniSplitModule, UniJsonTreeModule } from '@uniform/components';
+import {
+  UniIconModule,
+  UniIconService,
+  UniTabModule,
+  UniScrollModule,
+  UniSplitModule,
+  UniJsonTreeModule,
+  UniContextMenuModule,
+} from '@uniform/components';
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -24,6 +33,8 @@ import { JsonEditorModule } from './features/json-editor';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
 
     EffectsModule.forRoot([ ]),
     StoreModule.forRoot({ }),
@@ -39,6 +50,7 @@ import { JsonEditorModule } from './features/json-editor';
     UniScrollModule,
     UniSplitModule,
     UniJsonTreeModule,
+    UniContextMenuModule,
 
     TitlebarModule,
     ActionbarModule,
