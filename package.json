@@ -87,7 +87,6 @@
     "@angular/router": "~9.1.0",
     "@mdi/font": "^5.0.45",
     "@ngrx/effects": "^9.0.0",
-    "@ngrx/router-store": "^9.0.0",
     "@ngrx/store": "^9.0.0",
     "@ngrx/store-devtools": "^9.0.0",
     "@types/codemirror": "^0.0.89",

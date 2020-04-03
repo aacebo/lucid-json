@@ -45,7 +45,7 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
       gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
       viewportMargin: Infinity,
       autoCloseBrackets: true,
-      styleActiveLine: { nonEmpty: true },
+      styleActiveLine: false,
     });
 
     this.editor.on('change', this.onEditorChange.bind(this));

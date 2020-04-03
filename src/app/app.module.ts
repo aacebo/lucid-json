@@ -19,7 +19,6 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { environment } from '../environments/environment';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ResourcesModule } from './resources/resources.module';
 
@@ -43,7 +42,6 @@ import { JsonEditorModule } from './features/json-editor';
       maxAge: 100,
     }),
 
-    AppRoutingModule,
     ResourcesModule,
     UniIconModule,
     UniTabModule,
