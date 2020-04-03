@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@
 
 import { ElectronService } from './core/services/electron';
 import { ISystem, SystemService } from './resources/system';
-import { FileService, IFile } from './resources/file';
+import { FileService, File } from './resources/file';
 
 @Component({
   selector: 'luc-root',
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this._electronService.on('file.read', (e: IFile) => {
+    this._electronService.on('file.read', (e: File) => {
       this.fileService.set(e.name, e.path, e.text);
       this._cdr.markForCheck();
     });

@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { IFileState } from './file.state';
-import { IFile } from './models';
+import { File } from './models';
 import * as selectors from './file.selectors';
 import * as actions from './actions';
 
@@ -12,10 +12,10 @@ import * as actions from './actions';
 })
 export class FileService {
   readonly state$: Observable<IFileState>;
-  readonly files$: Observable<{ [path: string]: IFile }>;
+  readonly files$: Observable<{ [path: string]: File }>;
   readonly paths$: Observable<string[]>;
   readonly active$: Observable<string | undefined>;
-  readonly activeFile$: Observable<IFile | undefined>;
+  readonly activeFile$: Observable<File | undefined>;
 
   constructor(private readonly _store$: Store<IFileState>) {
     this.state$ = this._store$.pipe(select(selectors.selectState));

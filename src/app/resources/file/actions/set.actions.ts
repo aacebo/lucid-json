@@ -1,8 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IFile } from '../models';
-
 export const set = createAction(
   '[FILE] Set',
-  props<IFile>(),
+  props<{
+    readonly name: string;
+    readonly path: string;
+    readonly text: string;
+  }>(),
 );

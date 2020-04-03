@@ -16,7 +16,9 @@
           <luc-json-editor [value]="files[path]?.text"></luc-json-editor>
         </uni-split-area>
         <uni-split-area flex="50%">
-          <uni-json-tree [json]="{}"></uni-json-tree>
+          <uni-scroll>
+            <uni-json-tree [json]="files[path]?.json"></uni-json-tree>
+          </uni-scroll>
         </uni-split-area>
       </uni-vertical-split>
     </ng-template>
