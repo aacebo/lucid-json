@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-import { UniIconModule, UniIconService, UniTabModule } from '@uniform/components';
+import { UniIconModule, UniIconService, UniTabModule, UniScrollModule, UniSplitModule } from '@uniform/components';
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { ResourcesModule } from './resources/resources.module';
 
 import { TitlebarModule } from './features/titlebar';
+import { JsonEditorModule } from './features/json-editor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +35,11 @@ import { TitlebarModule } from './features/titlebar';
     ResourcesModule,
     UniIconModule,
     UniTabModule,
+    UniScrollModule,
+    UniSplitModule,
+
     TitlebarModule,
+    JsonEditorModule,
   ],
 })
 export class AppModule {

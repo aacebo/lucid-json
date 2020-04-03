@@ -8,7 +8,14 @@
     [label]="files[path]?.name"
   >
     <ng-template uniTabBody>
-      {{ files[path]?.text | json }}
+      <uni-vertical-split>
+        <uni-split-area flex="50%">
+          <luc-json-editor [value]="files[path]?.text"></luc-json-editor>
+        </uni-split-area>
+        <uni-split-area flex="50%">
+          area 2
+        </uni-split-area>
+      </uni-vertical-split>
     </ng-template>
   </uni-tab>
 </uni-tab-group>

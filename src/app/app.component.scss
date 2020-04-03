@@ -5,5 +5,10 @@
 
   uni-tab-group {
     flex: 1;
+    min-height: 0;
+
+    .uni-split {
+      height: 100%;
+    }
   }
 }
