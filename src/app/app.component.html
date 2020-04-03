@@ -2,18 +2,21 @@
   *ngIf="(systemService.isMac$ | async)"
 ></luc-titlebar>
 
-<uni-tab-group *ngIf="fileService.files$ | async; let files">
-  <uni-tab
-    *ngFor="let path of fileService.paths$ | async"
-    [label]="files[path]?.name"
-  >
+<uni-tab-group
+  *ngIf="fileService.files$ | async; let files"
+>
+  <uni-tab *ngFor="let path of fileService.paths$ | async">
+    <ng-template uniTabLabel>
+      <span>{{ files[path]?.name }}</span>
+    </ng-template>
+
     <ng-template uniTabBody>
       <uni-vertical-split>
         <uni-split-area flex="50%">
           <luc-json-editor [value]="files[path]?.text"></luc-json-editor>
         </uni-split-area>
         <uni-split-area flex="50%">
-          area 2
+          <uni-json-tree [json]="{}"></uni-json-tree>
         </uni-split-area>
       </uni-vertical-split>
     </ng-template>

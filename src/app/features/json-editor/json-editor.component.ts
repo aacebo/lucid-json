@@ -1,7 +1,6 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  AfterViewInit,
   ElementRef,
   ViewChild,
   Input,
@@ -11,21 +10,24 @@ import {
 } from '@angular/core';
 
 import CodeMirror from 'codemirror';
-import 'codemirror/addon/edit/closebrackets';
+import 'codemirror/addon/edit/closebrackets.js';
 import 'codemirror/addon/fold/brace-fold.js';
+import 'codemirror/addon/fold/foldgutter.js';
 import 'codemirror/addon/lint/lint.js';
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/addon/scroll/simplescrollbars.js';
+import 'codemirror/addon/selection/active-line.js';
+import 'codemirror/addon/selection/mark-selection.js';
 
 @Component({
   selector: 'luc-json-editor',
-  templateUrl: './json-editor.component.html',
+  template: `<textarea #textarea></textarea>`,
   styleUrls: ['./json-editor.component.scss'],
   host: { class: 'luc-json-editor' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class JsonEditorComponent implements AfterViewInit, OnDestroy {
+export class JsonEditorComponent implements OnDestroy {
   @Input()
   get value() { return this._value; }
   set value(v) {
@@ -35,31 +37,34 @@ export class JsonEditorComponent implements AfterViewInit, OnDestroy {
   private _value?: string;
 
   @ViewChild('textarea')
-  readonly textarea: ElementRef<HTMLTextAreaElement>;
-
-  editor: CodeMirror.EditorFromTextArea;
-
-  constructor(private readonly _cdr: ChangeDetectorRef) { }
-
-  ngAfterViewInit() {
+  get textarea() { return this._textarea; }
+  set textarea(v) {
+    this._textarea = v;
     this.editor = CodeMirror.fromTextArea(this.textarea.nativeElement, {
       lineNumbers: true,
-      theme: 'dracula',
+      theme: '3024-night',
       mode: 'application/json',
       readOnly: false,
       lint: true,
       tabSize: 2,
       autofocus: true,
       foldGutter: true,
+      scrollbarStyle: 'overlay',
       gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
       viewportMargin: Infinity,
       autoCloseBrackets: true,
+      styleActiveLine: { nonEmpty: true },
     });
 
     this.editor.on('change', this.onEditorChange.bind(this));
     this.editor.setValue(this.value || '');
     setTimeout(() => this.editor.refresh());
   }
+  private _textarea: ElementRef<HTMLTextAreaElement>;
+
+  editor: CodeMirror.EditorFromTextArea;
+
+  constructor(private readonly _cdr: ChangeDetectorRef) { }
 
   ngOnDestroy() {
     if (this.editor) {

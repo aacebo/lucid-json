@@ -55,7 +55,10 @@
               "src/styles.scss",
               "node_modules/@mdi/font/css/materialdesignicons.min.css",
               "node_modules/codemirror/lib/codemirror.css",
-              "node_modules/codemirror/theme/dracula.css"
+              "node_modules/codemirror/theme/3024-night.css",
+              "node_modules/codemirror/addon/scroll/simplescrollbars.css",
+              "node_modules/codemirror/addon/fold/foldgutter.css",
+              "node_modules/codemirror/addon/lint/lint.css"
             ],
             "scripts": [
               "node_modules/codemirror/lib/codemirror.js",
