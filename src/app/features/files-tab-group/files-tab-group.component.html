@@ -1,4 +1,4 @@
-<uni-tab-group *ngIf="files">
+<uni-tab-group (activeChange)="onTabChange($event)">
   <uni-tab *ngFor="let path of paths">
     <ng-template uniTabLabel>
       <span>{{ files[path]?.name }}</span>

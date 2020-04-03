@@ -43,4 +43,8 @@ export class AppComponent implements OnInit {
   onTextChange(e: { e: string; path: string; }) {
     this.fileService.update(e.path, e.e);
   }
+
+  onActiveChange(e: string) {
+    this.fileService.setActive(e);
+  }
 }
