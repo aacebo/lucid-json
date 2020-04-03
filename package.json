@@ -91,7 +91,7 @@
     "@ngrx/store": "^9.0.0",
     "@ngrx/store-devtools": "^9.0.0",
     "@types/codemirror": "^0.0.89",
-    "@uniform/components": "^0.0.4-rc.4",
+    "@uniform/components": "^0.0.4-rc.5",
     "codemirror": "^5.52.2",
     "dotenv": "^8.2.0",
     "electron-devtools-installer": "^2.2.4",

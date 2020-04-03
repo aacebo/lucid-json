@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 import { ElectronService } from './core/services/electron';
 import { ISystem, SystemService } from './resources/system';
@@ -11,10 +12,7 @@ import { FileService, File } from './resources/file';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  readonly flex = {
-    left: '100%',
-    right: '0',
-  };
+  readonly tree$ = new BehaviorSubject(false);
 
   constructor(
     readonly systemService: SystemService,
@@ -46,8 +44,7 @@ export class AppComponent implements OnInit {
   }
 
   onViewTree() {
-    this.flex.left = '50%';
-    this.flex.right = '50%';
+    this.tree$.next(true);
   }
 
   onTextChange(e: string, path: string) {

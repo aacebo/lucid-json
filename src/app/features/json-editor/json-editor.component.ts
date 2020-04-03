@@ -60,10 +60,8 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
 
     if (this.editor && v && v !== this.editor.getValue()) {
       this.editor.setValue(v);
+      this.cdr.markForCheck();
     }
-
-    this.cdr.markForCheck();
-    this.onChange(v);
   }
   protected _value?: string;
 
@@ -80,6 +78,7 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
 
     if (v !== this.value) {
       this.value = v;
+      this.onChange(v);
     }
   }
 }
