@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { ResourcesModule } from './resources/resources.module';
 
 import { TitlebarModule } from './features/titlebar';
+import { ActionbarModule } from './features/actionbar';
 import { JsonEditorModule } from './features/json-editor';
 
 @NgModule({
@@ -40,6 +41,7 @@ import { JsonEditorModule } from './features/json-editor';
     UniJsonTreeModule,
 
     TitlebarModule,
+    ActionbarModule,
     JsonEditorModule,
   ],
 })

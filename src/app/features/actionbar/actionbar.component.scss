@@ -1,0 +1,6 @@
+@import '../../../styles/variables';
+
+:host {
+  height: $titlebar-height;
+  background-color: var(--primary);
+}
