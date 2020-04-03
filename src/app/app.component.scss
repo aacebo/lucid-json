@@ -2,13 +2,4 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-
-  uni-tab-group {
-    flex: 1;
-    min-height: 0;
-
-    .uni-split {
-      height: 100%;
-    }
-  }
 }

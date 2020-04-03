@@ -2,29 +2,11 @@
   *ngIf="(systemService.isMac$ | async)"
 ></luc-titlebar>
 
-<uni-tab-group *ngIf="fileService.files$ | async; let files">
-  <uni-tab *ngFor="let path of fileService.paths$ | async">
-    <ng-template uniTabLabel>
-      <span>{{ files[path]?.name }}</span>
-    </ng-template>
-
-    <ng-template uniTabBody>
-      <uni-vertical-split>
-        <uni-split-area [uniContextMenu]="ctxMenuTpl">
-          <luc-json-editor [ngModel]="files[path]?.text" (ngModelChange)="onTextChange($event, path)"></luc-json-editor>
-        </uni-split-area>
-        <uni-split-area *ngIf="tree$ | async">
-          <uni-scroll>
-            <uni-json-tree [json]="files[path]?.json"></uni-json-tree>
-          </uni-scroll>
-        </uni-split-area>
-      </uni-vertical-split>
-    </ng-template>
-  </uni-tab>
-</uni-tab-group>
+<luc-files-tab-group
+  [active]="fileService.active$ | async"
+  [paths]="fileService.paths$ | async"
+  [files]="fileService.files$ | async"
+  (textChange)="onTextChange($event)"
+></luc-files-tab-group>
 
 <luc-actionbar></luc-actionbar>
-
-<ng-template #ctxMenuTpl>
-  <uni-option (click)="onViewTree()">View Tree</uni-option>
-</ng-template>

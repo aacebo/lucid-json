@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
 import { ElectronService } from './core/services/electron';
 import { ISystem, SystemService } from './resources/system';
@@ -12,8 +11,6 @@ import { FileService, File } from './resources/file';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  readonly tree$ = new BehaviorSubject(false);
-
   constructor(
     readonly systemService: SystemService,
     readonly fileService: FileService,
@@ -43,11 +40,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  onViewTree() {
-    this.tree$.next(true);
-  }
-
-  onTextChange(e: string, path: string) {
-    this.fileService.update(path, e);
+  onTextChange(e: { e: string; path: string; }) {
+    this.fileService.update(e.path, e.e);
   }
 }

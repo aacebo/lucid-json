@@ -1,0 +1,24 @@
+<uni-tab-group *ngIf="files">
+  <uni-tab *ngFor="let path of paths">
+    <ng-template uniTabLabel>
+      <span>{{ files[path]?.name }}</span>
+    </ng-template>
+
+    <ng-template uniTabBody>
+      <uni-vertical-split>
+        <uni-split-area [uniContextMenu]="ctxMenuTpl">
+          <luc-json-editor [ngModel]="files[path]?.text" (ngModelChange)="onTextChange($event)"></luc-json-editor>
+        </uni-split-area>
+        <uni-split-area *ngIf="tree$ | async">
+          <uni-scroll>
+            <uni-json-tree [json]="files[path]?.json"></uni-json-tree>
+          </uni-scroll>
+        </uni-split-area>
+      </uni-vertical-split>
+    </ng-template>
+  </uni-tab>
+</uni-tab-group>
+
+<ng-template #ctxMenuTpl>
+  <uni-option (click)="onViewTree()">View Tree</uni-option>
+</ng-template>

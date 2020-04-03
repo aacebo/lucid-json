@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  flex: 1;
+  min-height: 0;
+
+  uni-tab-group {
+    height: 100%;
+
+    .uni-split {
+      height: 100%;
+    }
+  }
+}
