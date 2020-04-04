@@ -8,7 +8,7 @@
 
     uni-tab-label {
       &.active {
-        background-color: #090300;
+        background-color: var(--theme-dark);
       }
     }
 
