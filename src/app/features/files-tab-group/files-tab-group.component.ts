@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { File } from '../../resources/file';
@@ -12,9 +12,25 @@ import { File } from '../../resources/file';
   encapsulation: ViewEncapsulation.None,
 })
 export class FilesTabGroupComponent {
-  @Input() active?: string;
-  @Input() paths: string[] = [];
   @Input() files: { [path: string]: File } = { };
+
+  @Input()
+  get paths() { return this._paths; }
+  set paths(v) {
+    this._paths = v;
+    this.tab = this.paths.indexOf(this._active);
+    this._cdr.markForCheck();
+  }
+  private _paths: string[] = [];
+
+  @Input()
+  get active() { return this._active; }
+  set active(v) {
+    this._active = v;
+    this.tab = this.paths.indexOf(v);
+    this._cdr.markForCheck();
+  }
+  private _active?: string;
 
   @Output() edit = new EventEmitter<{ e: string; path: string; }>();
   @Output() activate = new EventEmitter<string>();
@@ -23,6 +39,8 @@ export class FilesTabGroupComponent {
   readonly tree$ = new BehaviorSubject(false);
 
   tab = 0;
+
+  constructor(private readonly _cdr: ChangeDetectorRef) { }
 
   onViewTree() {
     this.tree$.next(true);
@@ -33,19 +51,16 @@ export class FilesTabGroupComponent {
   }
 
   onTabChange(e: number) {
-    this.activate.emit(this.paths[e]);
+    if (this.paths[e]) {
+      this.activate.emit(this.paths[e]);
+    }
   }
 
   onClose(e: string) {
     const idx = this.paths.indexOf(e);
-    const activeIdx = this.paths.indexOf(this.active);
 
     if (this.paths.length > 1 && e === this.active) {
       this.activate.emit(this.paths[idx + 1]);
-    }
-
-    if (idx <= activeIdx) {
-      this.tab--;
     }
 
     this.remove.emit(e);
