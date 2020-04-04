@@ -1,7 +1,7 @@
 <uni-tab-group [(active)]="tab" (activeChange)="onTabChange($event)">
   <uni-tab *ngFor="let path of paths">
     <ng-template uniTabLabel>
-      <span>{{ files[path]?.name }}</span>
+      <div class="uni-ellipsis tab-label">{{ files[path]?.name }}</div>
       <uni-icon
         class="close-icon"
         [class.active]="path === active"

@@ -7,6 +7,8 @@
     height: 100%;
 
     uni-tab-label {
+      display: flex;
+
       &.active {
         background-color: var(--custom-dark);
       }
@@ -15,6 +17,10 @@
         .close-icon {
           opacity: 1;
         }
+      }
+
+      .tab-label {
+        flex: 1;
       }
 
       .close-icon {
