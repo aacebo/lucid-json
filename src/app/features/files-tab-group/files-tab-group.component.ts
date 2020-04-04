@@ -22,6 +22,8 @@ export class FilesTabGroupComponent {
 
   readonly tree$ = new BehaviorSubject(false);
 
+  tab = 0;
+
   onViewTree() {
     this.tree$.next(true);
   }
@@ -36,9 +38,14 @@ export class FilesTabGroupComponent {
 
   onClose(e: string) {
     const idx = this.paths.indexOf(e);
+    const activeIdx = this.paths.indexOf(this.active);
 
-    if (this.paths.length > 1) {
+    if (this.paths.length > 1 && e === this.active) {
       this.activate.emit(this.paths[idx + 1]);
+    }
+
+    if (idx <= activeIdx) {
+      this.tab--;
     }
 
     this.remove.emit(e);
