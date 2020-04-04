@@ -12,12 +12,13 @@ import { File } from '../../resources/file';
   encapsulation: ViewEncapsulation.None,
 })
 export class FilesTabGroupComponent {
-  @Input() active: string;
+  @Input() active?: string;
   @Input() paths: string[] = [];
   @Input() files: { [path: string]: File } = { };
 
-  @Output() textChange = new EventEmitter<{ e: string; path: string; }>();
-  @Output() activeChange = new EventEmitter<string>();
+  @Output() edit = new EventEmitter<{ e: string; path: string; }>();
+  @Output() activate = new EventEmitter<string>();
+  @Output() remove = new EventEmitter<string>();
 
   readonly tree$ = new BehaviorSubject(false);
 
@@ -26,10 +27,20 @@ export class FilesTabGroupComponent {
   }
 
   onTextChange(e: string) {
-    this.textChange.emit({ e, path: this.active });
+    this.edit.emit({ e, path: this.active });
   }
 
   onTabChange(e: number) {
-    this.activeChange.emit(this.paths[e]);
+    this.activate.emit(this.paths[e]);
+  }
+
+  onClose(e: string) {
+    const idx = this.paths.indexOf(e);
+
+    if (this.paths.length > 1) {
+      this.activate.emit(this.paths[idx + 1]);
+    }
+
+    this.remove.emit(e);
   }
 }

@@ -6,8 +6,9 @@
   [active]="fileService.active$ | async"
   [paths]="fileService.paths$ | async"
   [files]="fileService.files$ | async"
-  (textChange)="onTextChange($event)"
-  (activeChange)="onActiveChange($event)"
+  (edit)="onEdit($event)"
+  (activate)="onActivate($event)"
+  (remove)="onRemove($event)"
 ></luc-files-tab-group>
 
 <luc-actionbar></luc-actionbar>

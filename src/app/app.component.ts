@@ -40,11 +40,15 @@ export class AppComponent implements OnInit {
     });
   }
 
-  onTextChange(e: { e: string; path: string; }) {
+  onEdit(e: { e: string; path: string; }) {
     this.fileService.update(e.path, e.e);
   }
 
-  onActiveChange(e: string) {
+  onActivate(e: string) {
     this.fileService.setActive(e);
+  }
+
+  onRemove(e: string) {
+    this.fileService.remove(e);
   }
 }

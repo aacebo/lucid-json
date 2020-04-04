@@ -13,4 +13,8 @@ export const files = createReducer<{ [path: string]: File }>(
     _[a.path].text = a.text;
     _[a.path].dirty = true;
   }),
+  mutableOn(actions.remove, (_, a) => {
+    _[a.path] = undefined;
+    delete _[a.path];
+  }),
 );

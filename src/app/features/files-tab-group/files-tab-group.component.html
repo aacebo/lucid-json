@@ -2,6 +2,12 @@
   <uni-tab *ngFor="let path of paths">
     <ng-template uniTabLabel>
       <span>{{ files[path]?.name }}</span>
+      <uni-icon
+        class="close-icon"
+        [class.active]="path === active"
+        icon="mdi-close"
+        (click)="onClose(path)"
+      ></uni-icon>
     </ng-template>
 
     <ng-template uniTabBody>
