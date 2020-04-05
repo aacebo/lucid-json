@@ -60,6 +60,7 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
       tabSize: 2,
       autofocus: true,
       foldGutter: true,
+      dragDrop: false,
       scrollbarStyle: 'overlay',
       gutters: [
         'CodeMirror-linenumbers',

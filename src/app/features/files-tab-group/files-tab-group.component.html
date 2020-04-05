@@ -4,9 +4,15 @@
       <div class="uni-ellipsis tab-label">{{ files[path]?.name }}</div>
       <uni-icon
         class="close-icon"
-        [class.active]="path === active"
         icon="mdi-close"
+        [class.active]="path === active"
         (click)="onClose(path)"
+      ></uni-icon>
+
+      <uni-icon
+        *ngIf="files[path]?.dirty"
+        class="dirty-icon"
+        icon="mdi-checkbox-blank-circle"
       ></uni-icon>
     </ng-template>
 

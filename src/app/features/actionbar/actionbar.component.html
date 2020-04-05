@@ -9,12 +9,34 @@
       uniBadgeColor="danger"
     ></uni-icon>
   </div>
+
+  <div
+    class="luc-actionbar--item clickeable"
+    (click)="minify.emit()"
+  >
+    <uni-icon
+      icon="mdi-format-align-justify"
+      uniTooltip="Minify"
+      uniTooltipPosition="top"
+    ></uni-icon>
+  </div>
+
+  <div
+    class="luc-actionbar--item clickeable"
+    (click)="beautify.emit()"
+  >
+    <uni-icon
+      icon="mdi-format-align-right"
+      uniTooltip="Beautify"
+      uniTooltipPosition="top"
+    ></uni-icon>
+  </div>
 </div>
 
 <div class="spacer"></div>
 
 <div class="right">
   <div class="luc-actionbar--item">
-    Ln {{ cursor?.line }}, Col {{ cursor?.ch }}
+    Ln {{ cursor?.line + 1 }}, Col {{ cursor?.ch + 1 }}
   </div>
 </div>

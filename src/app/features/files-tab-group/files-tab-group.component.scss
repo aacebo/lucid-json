@@ -8,6 +8,7 @@
 
     uni-tab-label {
       display: flex;
+      position: relative;
 
       &.active {
         background-color: var(--custom-dark);
@@ -16,6 +17,10 @@
       &:hover {
         .close-icon {
           opacity: 1;
+        }
+
+        .dirty-icon {
+          opacity: 0;
         }
       }
 
@@ -31,6 +36,12 @@
         &.active {
           opacity: 1;
         }
+      }
+
+      .dirty-icon {
+        position: absolute;
+        transition: opacity 0.2s ease-in-out;
+        right: 7px;
       }
     }
 

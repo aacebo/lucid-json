@@ -12,11 +12,16 @@
   .left,
   .right {
     margin: auto;
+    display: flex;
   }
 
   .luc-actionbar--item {
     font-size: 0.8em;
     padding: 0 5px;
+
+    &.clickeable {
+      cursor: pointer;
+    }
 
     uni-icon {
       font-size: 1rem;
