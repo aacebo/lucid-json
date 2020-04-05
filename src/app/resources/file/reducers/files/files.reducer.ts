@@ -17,4 +17,7 @@ export const files = createReducer<{ [path: string]: File }>(
     _[a.path] = undefined;
     delete _[a.path];
   }),
+  mutableOn(actions.setTree, (_, a) => {
+    _[a.path].tree = a.tree;
+  }),
 );

@@ -55,6 +55,10 @@ export class AppComponent implements OnInit {
     this.fileService.remove(e);
   }
 
+  onTree(e: { path: string; tree: boolean }) {
+    this.fileService.setTree(e.path, e.tree);
+  }
+
   onCursorChange(e: CodeMirror.Position) {
     this.editorService.setCursor(e);
   }

@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import CodeMirror from 'codemirror';
 
 import { File } from '../../resources/file';
@@ -37,18 +36,17 @@ export class FilesTabGroupComponent {
   @Output() edit = new EventEmitter<{ e: string; path: string; }>();
   @Output() activate = new EventEmitter<string>();
   @Output() remove = new EventEmitter<string>();
+  @Output() tree = new EventEmitter<{ path: string; tree: boolean; }>();
 
   // editor
   @Output() cursorChange = new EventEmitter<CodeMirror.Position>();
-
-  readonly tree$ = new BehaviorSubject(false);
 
   tab = 0;
 
   constructor(private readonly _cdr: ChangeDetectorRef) { }
 
   onViewTree() {
-    this.tree$.next(true);
+    this.tree.emit({ path: this.active, tree: !this.files[this.active].tree });
   }
 
   onTextChange(e: string) {

@@ -19,7 +19,7 @@
             (cursorChange)="cursorChange.emit($event)"
           ></luc-json-editor>
         </uni-split-area>
-        <uni-split-area *ngIf="tree$ | async">
+        <uni-split-area *ngIf="files[path]?.tree">
           <uni-scroll>
             <uni-json-tree [json]="files[path]?.json"></uni-json-tree>
           </uni-scroll>

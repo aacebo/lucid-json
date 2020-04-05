@@ -18,6 +18,7 @@ export class File {
   private _json?: any;
 
   dirty = false;
+  tree = false;
 
   constructor(name: string, path: string, text: string) {
     this.name = name;
