@@ -12,15 +12,28 @@ import { UniFormFieldControlBase, uniFormFieldProvider } from '@uniform/componen
 
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript.js';
+
 import 'codemirror/addon/edit/closebrackets.js';
 import 'codemirror/addon/edit/matchbrackets.js';
+
 import 'codemirror/addon/fold/brace-fold.js';
 import 'codemirror/addon/fold/foldgutter.js';
+
 import 'codemirror/addon/lint/lint.js';
 import 'codemirror/addon/hint/show-hint.js';
+
 import 'codemirror/addon/scroll/simplescrollbars.js';
+
 import 'codemirror/addon/selection/active-line.js';
 import 'codemirror/addon/selection/mark-selection.js';
+
+import 'codemirror/addon/dialog/dialog.js';
+
+import 'codemirror/addon/search/jump-to-line.js';
+import 'codemirror/addon/search/match-highlighter.js';
+import 'codemirror/addon/search/matchesonscrollbar.js';
+import 'codemirror/addon/search/search.js';
+import 'codemirror/addon/search/searchcursor.js';
 
 @Component({
   selector: 'luc-json-editor',

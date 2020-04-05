@@ -9,4 +9,5 @@ import CodeMirror from 'codemirror';
 })
 export class ActionbarComponent {
   @Input() cursor?: CodeMirror.Position;
+  @Input() errors = 5;
 }

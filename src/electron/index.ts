@@ -91,6 +91,7 @@ electron.app.on('ready', () => {
           'style-src \'self\' \'unsafe-inline\'',
           'script-src \'self\'',
           'connect-src * data: blob: \'unsafe-inline\'',
+          'img-src \'self\' data:',
         ],
       },
     });

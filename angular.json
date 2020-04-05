@@ -58,7 +58,9 @@
               "node_modules/codemirror/theme/icecoder.css",
               "node_modules/codemirror/addon/scroll/simplescrollbars.css",
               "node_modules/codemirror/addon/fold/foldgutter.css",
-              "node_modules/codemirror/addon/lint/lint.css"
+              "node_modules/codemirror/addon/lint/lint.css",
+              "node_modules/codemirror/addon/search/matchesonscrollbar.css",
+              "node_modules/codemirror/addon/dialog/dialog.css"
             ],
             "scripts": [
               "node_modules/codemirror/lib/codemirror.js"
