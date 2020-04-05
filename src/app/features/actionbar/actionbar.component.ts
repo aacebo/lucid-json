@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import CodeMirror from 'codemirror';
 
 @Component({
   selector: 'luc-actionbar',
@@ -6,4 +7,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./actionbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ActionbarComponent { }
+export class ActionbarComponent {
+  @Input() cursor?: CodeMirror.Position;
+}

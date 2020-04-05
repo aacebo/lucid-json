@@ -3,4 +3,19 @@
 :host {
   height: $titlebar-height;
   background-color: var(--primary);
+  display: flex;
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .left,
+  .right {
+    margin: auto;
+  }
+
+  .luc-actionbar--item {
+    font-size: 0.8em;
+    padding: 0 5px;
+  }
 }

@@ -12,4 +12,7 @@
   (cursorChange)="onCursorChange($event)"
 ></luc-files-tab-group>
 
-<luc-actionbar *ngIf="fileService.active$ | async"></luc-actionbar>
+<luc-actionbar
+  *ngIf="fileService.active$ | async"
+  [cursor]="editorService.cursor$ | async"
+></luc-actionbar>
