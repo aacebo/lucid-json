@@ -1,6 +1,8 @@
 // tslint:disable-next-line
 interface Window {
   readonly require: NodeRequire;
+  jsonlint: any;
+  JSHINT: any;
 }
 
 // tslint:disable-next-line

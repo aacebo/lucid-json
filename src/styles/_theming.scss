@@ -1,5 +1,5 @@
 @import '~@uniform/components/index';
 
 @include uni-theme(map-merge($uni-theme-colors, (
-  'custom-dark': #090300
+  'custom-dark': #1d1d1b
 )));

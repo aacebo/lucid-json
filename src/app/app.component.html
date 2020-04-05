@@ -9,6 +9,7 @@
   (edit)="onEdit($event)"
   (activate)="onActivate($event)"
   (remove)="onRemove($event)"
+  (cursorChange)="onCursorChange($event)"
 ></luc-files-tab-group>
 
-<luc-actionbar></luc-actionbar>
+<luc-actionbar *ngIf="fileService.active$ | async"></luc-actionbar>

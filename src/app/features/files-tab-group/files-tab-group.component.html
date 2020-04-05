@@ -13,7 +13,11 @@
     <ng-template uniTabBody>
       <uni-vertical-split>
         <uni-split-area [uniContextMenu]="ctxMenuTpl">
-          <luc-json-editor [ngModel]="files[path]?.text" (ngModelChange)="onTextChange($event)"></luc-json-editor>
+          <luc-json-editor
+            [ngModel]="files[path]?.text"
+            (ngModelChange)="onTextChange($event)"
+            (cursorChange)="cursorChange.emit($event)"
+          ></luc-json-editor>
         </uni-split-area>
         <uni-split-area *ngIf="tree$ | async">
           <uni-scroll>

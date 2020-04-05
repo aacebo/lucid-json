@@ -5,7 +5,12 @@ export class File {
   get text() { return this._text; }
   set text(v) {
     this._text = v;
-    this._json = JSON.parse(v);
+
+    try {
+      this._json = JSON.parse(v);
+    } catch (_) {
+      this._json = undefined;
+    }
   }
   private _text: string;
 

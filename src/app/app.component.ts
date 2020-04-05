@@ -1,8 +1,10 @@
 import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
+import CodeMirror from 'codemirror';
 
 import { ElectronService } from './core/services/electron';
 import { ISystem, SystemService } from './resources/system';
 import { FileService, File } from './resources/file';
+import { EditorService } from './resources/editor';
 
 @Component({
   selector: 'luc-root',
@@ -14,6 +16,7 @@ export class AppComponent implements OnInit {
   constructor(
     readonly systemService: SystemService,
     readonly fileService: FileService,
+    readonly editorService: EditorService,
     private readonly _electronService: ElectronService,
     private readonly _cdr: ChangeDetectorRef,
   ) { }
@@ -30,7 +33,7 @@ export class AppComponent implements OnInit {
       });
 
       if (res.filePaths.length > 0) {
-        this._electronService.send('file', res.filePaths[0]);
+        this._electronService.send('file.open', res.filePaths[0]);
       }
     });
 
@@ -50,5 +53,9 @@ export class AppComponent implements OnInit {
 
   onRemove(e: string) {
     this.fileService.remove(e);
+  }
+
+  onCursorChange(e: CodeMirror.Position) {
+    this.editorService.setCursor(e);
   }
 }
