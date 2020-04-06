@@ -12,7 +12,13 @@ import { File } from '../../resources/file';
   encapsulation: ViewEncapsulation.None,
 })
 export class FilesTabGroupComponent {
-  @Input() files: { [path: string]: File } = { };
+  @Input()
+  get files() { return this._files; }
+  set files(v) {
+    this._files = v;
+    this._cdr.markForCheck();
+  }
+  private _files: { [path: string]: File } = { };
 
   @Input()
   get paths() { return this._paths; }

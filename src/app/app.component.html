@@ -14,6 +14,9 @@
 ></luc-files-tab-group>
 
 <luc-actionbar
-  *ngIf="fileService.active$ | async"
+  *ngIf="fileService.active$ | async; let active"
+  [active]="active"
   [cursor]="editorService.cursor$ | async"
+  (minify)="onFormat($event, false)"
+  (beautify)="onFormat($event, true)"
 ></luc-actionbar>

@@ -62,4 +62,8 @@ export class AppComponent implements OnInit {
   onCursorChange(e: CodeMirror.Position) {
     this.editorService.setCursor(e);
   }
+
+  onFormat(path: string, pretty: boolean) {
+    this.fileService.format(path, pretty);
+  }
 }

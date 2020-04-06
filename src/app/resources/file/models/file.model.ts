@@ -20,9 +20,7 @@ export class File {
   dirty = false;
   tree = false;
 
-  constructor(name: string, path: string, text: string) {
-    this.name = name;
-    this.path = path;
-    this.text = text;
+  constructor(args?: Partial<File>) {
+    Object.assign(this, args);
   }
 }

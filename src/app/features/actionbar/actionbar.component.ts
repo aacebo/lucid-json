@@ -8,9 +8,10 @@ import CodeMirror from 'codemirror';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActionbarComponent {
+  @Input() active?: string;
   @Input() cursor?: CodeMirror.Position;
   @Input() errors = 5;
 
-  @Output() minify = new EventEmitter<void>();
-  @Output() beautify = new EventEmitter<void>();
+  @Output() minify = new EventEmitter<string>();
+  @Output() beautify = new EventEmitter<string>();
 }

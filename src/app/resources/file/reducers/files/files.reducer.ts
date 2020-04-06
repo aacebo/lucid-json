@@ -7,7 +7,11 @@ import * as actions from '../../actions';
 export const files = createReducer<{ [path: string]: File }>(
   { },
   mutableOn(actions.set, (_, a) => {
-    _[a.path] = new File(a.name, a.path, a.text);
+    _[a.path] = new File({
+      name: a.name,
+      path: a.path,
+      text: a.text,
+    });
   }),
   mutableOn(actions.update, (_, a) => {
     _[a.path].text = a.text;
@@ -19,5 +23,21 @@ export const files = createReducer<{ [path: string]: File }>(
   }),
   mutableOn(actions.setTree, (_, a) => {
     _[a.path].tree = a.tree;
+  }),
+  mutableOn(actions.format, (_, a) => {
+    let text: string;
+
+    if (a.pretty) {
+      text = JSON.stringify(_[a.path].json, undefined, 2);
+    } else {
+      text = JSON.stringify(_[a.path].json);
+    }
+
+    _[a.path] = new File({
+      name: _[a.path].name,
+      path: a.path,
+      text,
+      dirty: true,
+    });
   }),
 );

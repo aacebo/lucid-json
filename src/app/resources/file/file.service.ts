@@ -42,4 +42,8 @@ export class FileService {
   remove(path: string) {
     this._store$.dispatch(actions.remove({ path }));
   }
+
+  format(path: string, pretty: boolean) {
+    this._store$.dispatch(actions.format({ path, pretty }));
+  }
 }

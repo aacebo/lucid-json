@@ -12,7 +12,7 @@
 
   <div
     class="luc-actionbar--item clickeable"
-    (click)="minify.emit()"
+    (click)="minify.emit(active)"
   >
     <uni-icon
       icon="mdi-format-align-justify"
@@ -23,7 +23,7 @@
 
   <div
     class="luc-actionbar--item clickeable"
-    (click)="beautify.emit()"
+    (click)="beautify.emit(active)"
   >
     <uni-icon
       icon="mdi-format-align-right"
