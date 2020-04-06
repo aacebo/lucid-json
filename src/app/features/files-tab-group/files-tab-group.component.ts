@@ -51,7 +51,7 @@ export class FilesTabGroupComponent {
 
   constructor(private readonly _cdr: ChangeDetectorRef) { }
 
-  onViewTree() {
+  onTree() {
     this.tree.emit({ path: this.active, tree: !this.files[this.active].tree });
   }
 

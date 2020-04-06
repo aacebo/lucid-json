@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import CodeMirror from 'codemirror';
 
 import { ElectronService } from './core/services/electron';
@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
     readonly fileService: FileService,
     readonly editorService: EditorService,
     private readonly _electronService: ElectronService,
-    private readonly _cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -39,7 +38,6 @@ export class AppComponent implements OnInit {
 
     this._electronService.on('file.read', (e: File) => {
       this.fileService.set(e.name, e.path, e.text);
-      this._cdr.markForCheck();
     });
   }
 

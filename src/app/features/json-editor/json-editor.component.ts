@@ -87,7 +87,6 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
     if (this.editor && v && v !== this.editor.getValue()) {
       this.editor.setValue(v);
       this.cdr.markForCheck();
-      setTimeout(() => this.editor.refresh());
     }
   }
   protected _value?: string;

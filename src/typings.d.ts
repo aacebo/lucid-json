@@ -14,3 +14,4 @@ declare var require: NodeRequire;
 
 declare module '@prantlf/jsonlint/lib/validator';
 declare module '@prantlf/jsonlint/lib/printer';
+declare module 'generate-schema';

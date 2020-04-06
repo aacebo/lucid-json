@@ -1,3 +1,5 @@
+import * as generateSchema from 'generate-schema';
+
 export class File {
   readonly name: string;
   readonly path: string;
@@ -7,15 +9,27 @@ export class File {
     this._text = v;
 
     try {
-      this._json = JSON.parse(v);
+      this.json = JSON.parse(v);
     } catch (_) {
-      this._json = undefined;
+      this.json = undefined;
     }
   }
   private _text: string;
 
   get json() { return this._json; }
+  set json(v) {
+    this._json = v;
+
+    if (v) {
+      this._schema = generateSchema.generic(v);
+    } else {
+      this._schema = undefined;
+    }
+  }
   private _json?: any;
+
+  get schema() { return this._schema; }
+  private _schema?: any;
 
   dirty = false;
   tree = false;

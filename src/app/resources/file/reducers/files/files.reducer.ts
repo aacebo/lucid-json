@@ -34,8 +34,7 @@ export const files = createReducer<{ [path: string]: File }>(
     }
 
     _[a.path] = new File({
-      name: _[a.path].name,
-      path: a.path,
+      ..._[a.path],
       text,
       dirty: true,
     });

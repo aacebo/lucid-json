@@ -17,24 +17,35 @@
     </ng-template>
 
     <ng-template uniTabBody>
-      <uni-vertical-split>
-        <uni-split-area [uniContextMenu]="ctxMenuTpl">
-          <luc-json-editor
-            [ngModel]="files[path]?.text"
-            (ngModelChange)="onTextChange($event)"
-            (cursorChange)="cursorChange.emit($event)"
-          ></luc-json-editor>
+      <uni-horizontal-split>
+        <uni-split-area>
+          <uni-vertical-split>
+            <uni-split-area [uniContextMenu]="ctxMenuTpl">
+              <luc-json-editor
+                [ngModel]="files[path]?.text"
+                (ngModelChange)="onTextChange($event)"
+                (cursorChange)="cursorChange.emit($event)"
+              ></luc-json-editor>
+            </uni-split-area>
+            <uni-split-area *ngIf="files[path]?.tree">
+              <uni-scroll>
+                <uni-json-tree [json]="files[path]?.json"></uni-json-tree>
+              </uni-scroll>
+            </uni-split-area>
+          </uni-vertical-split>
         </uni-split-area>
-        <uni-split-area *ngIf="files[path]?.tree">
+        <uni-split-area flex="25%">
           <uni-scroll>
-            <uni-json-tree [json]="files[path]?.json"></uni-json-tree>
+            <uni-json-tree [json]="files[path]?.schema"></uni-json-tree>
           </uni-scroll>
         </uni-split-area>
-      </uni-vertical-split>
+      </uni-horizontal-split>
     </ng-template>
   </uni-tab>
 </uni-tab-group>
 
 <ng-template #ctxMenuTpl>
-  <uni-option (click)="onViewTree()">View Tree</uni-option>
+  <uni-option (click)="onTree()">Tree</uni-option>
+  <uni-option>Schema</uni-option>
+  <uni-option>Interface</uni-option>
 </ng-template>
