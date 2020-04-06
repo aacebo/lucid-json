@@ -1225,10 +1225,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@uniform/components@^0.0.4-rc.8":
-  version "0.0.4-rc.8"
-  resolved "https://registry.yarnpkg.com/@uniform/components/-/components-0.0.4-rc.8.tgz#a275d807c826e1f45c456555545965ec569d5e38"
-  integrity sha512-LFfU8xAMyR2xsXxWVuTlFTW8eezU+BaBVrAVeZUlhyMww2vYeBtF2jU5aMvt5X6gD8+cldVhoU1/PSfzEmxNIQ==
+"@uniform/components@^0.0.5-rc.0":
+  version "0.0.5-rc.0"
+  resolved "https://registry.yarnpkg.com/@uniform/components/-/components-0.0.5-rc.0.tgz#8d7b5dd1ae42512adb9529c086db00b0d2ba35e3"
+  integrity sha512-T3+KbfhyPUy91mHYxb5mPiRKL4FW4NxXEnphbhkgVKmY8v5WgjrumAlUQ55Hr8wF+7QIKxZr/kBbuJOyLdLidw==
   dependencies:
     highlight.js "^9.18.1"
     marked "^0.8.0"

@@ -17,7 +17,7 @@
     </ng-template>
 
     <ng-template uniTabBody>
-      <uni-horizontal-split>
+      <uni-horizontal-split flex="0 0 75%">
         <uni-split-area>
           <uni-vertical-split>
             <uni-split-area [uniContextMenu]="ctxMenuTpl">
@@ -34,7 +34,7 @@
             </uni-split-area>
           </uni-vertical-split>
         </uni-split-area>
-        <uni-split-area flex="25%">
+        <uni-split-area>
           <uni-scroll>
             <uni-json-tree [json]="files[path]?.schema"></uni-json-tree>
           </uni-scroll>
