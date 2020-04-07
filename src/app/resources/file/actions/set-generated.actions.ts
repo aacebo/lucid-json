@@ -9,8 +9,3 @@ export const setGenerated = createAction(
     readonly schema?: any;
   }>(),
 );
-
-export const setGeneratedFailed = createAction(
-  '[FILE] SetGeneratedFailed',
-  props<{ readonly error: Error }>(),
-);

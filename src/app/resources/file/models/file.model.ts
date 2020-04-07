@@ -6,5 +6,7 @@ export interface IFile {
   schema?: any;
   typescript?: string;
   dirty?: boolean;
-  tree?: boolean;
+  showTree?: boolean;
+  showSchema?: boolean;
+  showTypescript?: boolean;
 }

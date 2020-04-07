@@ -22,7 +22,7 @@ export const files = createReducer<{ [path: string]: IFile }>(
     delete _[a.path];
   }),
   mutableOn(actions.setTree, (_, a) => {
-    _[a.path].tree = a.tree;
+    _[a.path].showTree = a.tree;
   }),
   mutableOn(actions.format, (_, a) => {
     let text: string;

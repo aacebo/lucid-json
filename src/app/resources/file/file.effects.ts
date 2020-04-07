@@ -14,13 +14,13 @@ export class FileEffects {
     map(a => {
       const json = tryParseJSON(a.text);
       const schema = json ? toJsonSchema(json) : undefined;
-      const typescript = json ? jsonToTs(json) : undefined;
+      const ts = json ? jsonToTs(json) : undefined;
 
       return actions.setGenerated({
         path: a.path,
         json,
         schema,
-        typescript: typescript.join('\n'),
+        typescript: ts ? ts.join('\n\n') : undefined,
       });
     }),
   ));

@@ -52,7 +52,7 @@ export class FilesTabGroupComponent {
   constructor(private readonly _cdr: ChangeDetectorRef) { }
 
   onTree() {
-    this.tree.emit({ path: this.active, tree: !this.files[this.active].tree });
+    this.tree.emit({ path: this.active, tree: !this.files[this.active].showTree });
   }
 
   onTextChange(e: string) {
