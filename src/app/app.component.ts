@@ -21,8 +21,6 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    window.jsonSchemaToTypescript = this._electronService.getGlobal('jsonSchemaToTypescript');
-
     this._electronService.on('system', (system: ISystem) => {
       this.systemService.setSystem(system);
     });

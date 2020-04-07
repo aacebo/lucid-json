@@ -95,11 +95,11 @@
     "dotenv": "^8.2.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-is-dev": "^1.1.0",
-    "generate-schema": "^2.6.0",
     "immer": "^6.0.3",
-    "json-schema-to-typescript": "^8.2.0",
+    "json-to-ts": "^1.7.0",
     "ngrx-etc": "^4.1.0",
     "rxjs": "~6.5.4",
+    "to-json-schema": "^0.2.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
