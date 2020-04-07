@@ -1,11 +1,11 @@
 import { Action, combineReducers } from '@ngrx/store';
 
-import { File } from './models';
+import { IFile } from './models';
 import * as fromReducers from './reducers';
 
 export interface IFileState {
   readonly active?: string;
-  readonly files: { [path: string]: File };
+  readonly files: { [path: string]: IFile };
 }
 
 export function reducers(state: IFileState, action: Action) {

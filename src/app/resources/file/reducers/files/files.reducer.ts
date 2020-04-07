@@ -1,20 +1,30 @@
 import { createReducer } from '@ngrx/store';
 import { mutableOn } from 'ngrx-etc';
+import * as generateSchema from 'generate-schema';
 
-import { File } from '../../models';
+import { IFile } from '../../models';
+import { tryParseJSON } from '../../try-parse-json.util';
 import * as actions from '../../actions';
 
-export const files = createReducer<{ [path: string]: File }>(
+export const files = createReducer<{ [path: string]: IFile }>(
   { },
   mutableOn(actions.set, (_, a) => {
-    _[a.path] = new File({
+    const json = tryParseJSON(a.text);
+
+    _[a.path] = {
       name: a.name,
       path: a.path,
       text: a.text,
-    });
+      json,
+      schema: json ? generateSchema.json(json) : undefined,
+    };
   }),
   mutableOn(actions.update, (_, a) => {
+    const json = tryParseJSON(a.text);
+
     _[a.path].text = a.text;
+    _[a.path].json = json;
+    _[a.path].schema = json ? generateSchema.json(json) : undefined;
     _[a.path].dirty = true;
   }),
   mutableOn(actions.remove, (_, a) => {
@@ -33,10 +43,10 @@ export const files = createReducer<{ [path: string]: File }>(
       text = JSON.stringify(_[a.path].json);
     }
 
-    _[a.path] = new File({
+    _[a.path] = {
       ..._[a.path],
       text,
       dirty: true,
-    });
+    };
   }),
 );

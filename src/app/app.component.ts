@@ -3,7 +3,7 @@ import CodeMirror from 'codemirror';
 
 import { ElectronService } from './core/services/electron';
 import { ISystem, SystemService } from './resources/system';
-import { FileService, File } from './resources/file';
+import { FileService, IFile } from './resources/file';
 import { EditorService } from './resources/editor';
 
 @Component({
@@ -21,6 +21,8 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    window.jsonSchemaToTypescript = this._electronService.getGlobal('jsonSchemaToTypescript');
+
     this._electronService.on('system', (system: ISystem) => {
       this.systemService.setSystem(system);
     });
@@ -36,7 +38,7 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this._electronService.on('file.read', (e: File) => {
+    this._electronService.on('file.read', (e: IFile) => {
       this.fileService.set(e.name, e.path, e.text);
     });
   }

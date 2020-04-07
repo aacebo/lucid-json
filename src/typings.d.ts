@@ -1,6 +1,7 @@
 // tslint:disable-next-line
 interface Window {
   readonly require: NodeRequire;
+  jsonSchemaToTypescript: any;
 }
 
 // tslint:disable-next-line

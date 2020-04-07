@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import CodeMirror from 'codemirror';
 
-import { File } from '../../resources/file';
+import { IFile } from '../../resources/file';
 
 @Component({
   selector: 'luc-files-tab-group',
@@ -18,7 +18,7 @@ export class FilesTabGroupComponent {
     this._files = v;
     this._cdr.markForCheck();
   }
-  private _files: { [path: string]: File } = { };
+  private _files: { [path: string]: IFile } = { };
 
   @Input()
   get paths() { return this._paths; }

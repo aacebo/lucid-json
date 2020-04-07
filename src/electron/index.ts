@@ -4,10 +4,12 @@ import * as dotenv from 'dotenv';
 import * as dev from 'electron-is-dev';
 import * as path from 'path';
 import * as url from 'url';
+import { compile } from 'json-schema-to-typescript';
 
 import { AppMenu } from './menu';
 import { File } from './file';
 
+(global as any).jsonSchemaToTypescript = compile;
 dotenv.config({
   debug: dev,
   path: `${__dirname}/../.env`,
