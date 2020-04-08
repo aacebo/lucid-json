@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { IFileState } from './file.state';
-import { IFile } from './models';
+import { IFile, IGrid } from './models';
 import * as selectors from './file.selectors';
 import * as actions from './actions';
 
@@ -33,8 +33,8 @@ export class FileService {
     this._store$.dispatch(actions.setActive({ path }));
   }
 
-  setVisible(path: string, tree?: boolean, schema?: boolean, typescript?: boolean) {
-    this._store$.dispatch(actions.setVisible({ path, tree, schema, typescript }));
+  setGrid(path: string, grid: IGrid) {
+    this._store$.dispatch(actions.setGrid({ path, grid }));
   }
 
   update(path: string, text: string) {

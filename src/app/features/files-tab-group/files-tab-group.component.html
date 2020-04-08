@@ -17,31 +17,37 @@
     </ng-template>
 
     <ng-template uniTabBody>
-      <uni-horizontal-split flex="0 0 75%">
-        <uni-split-area>
+      <uni-horizontal-split flex="0 0 75%" [uniContextMenu]="ctxMenuTpl">
+        <uni-split-area *ngIf="files[path]?.grid?.editor || files[path]?.grid?.tree">
           <uni-vertical-split flex="0 0 75%">
-            <uni-split-area [uniContextMenu]="ctxMenuTpl">
+            <uni-split-area *ngIf="files[path]?.grid?.editor">
               <luc-json-editor
                 [ngModel]="files[path]?.text"
                 (ngModelChange)="onTextChange($event)"
                 (cursorChange)="cursorChange.emit($event)"
               ></luc-json-editor>
             </uni-split-area>
-            <uni-split-area *ngIf="files[path]?.visible?.tree">
+            <uni-split-area *ngIf="files[path]?.grid?.tree">
               <uni-scroll>
-                <uni-json-tree [json]="files[path]?.json"></uni-json-tree>
+                <uni-json-tree
+                  [json]="files[path]?.json"
+                  (propertyValueClicked)="onPropertyValueClick($event)"
+                ></uni-json-tree>
               </uni-scroll>
             </uni-split-area>
           </uni-vertical-split>
         </uni-split-area>
-        <uni-split-area *ngIf="files[path]?.visible?.schema || files[path]?.visible?.typescript">
+        <uni-split-area *ngIf="files[path]?.grid?.schema || files[path]?.grid?.typescript">
           <uni-vertical-split>
-            <uni-split-area *ngIf="files[path]?.visible?.schema">
+            <uni-split-area *ngIf="files[path]?.grid?.schema">
               <uni-scroll>
-                <uni-json-tree [json]="files[path]?.schema"></uni-json-tree>
+                <uni-json-tree
+                 [json]="files[path]?.schema"
+                 (propertyValueClicked)="onPropertyValueClick($event)"
+                ></uni-json-tree>
               </uni-scroll>
             </uni-split-area>
-            <uni-split-area *ngIf="files[path]?.visible?.typescript">
+            <uni-split-area *ngIf="files[path]?.grid?.typescript">
               <uni-scroll>
                 <uni-code language="typescript" [code]="files[path]?.typescript"></uni-code>
               </uni-scroll>
@@ -54,7 +60,8 @@
 </uni-tab-group>
 
 <ng-template #ctxMenuTpl>
-  <uni-option (click)="onTree()">Tree</uni-option>
-  <uni-option (click)="onSchema()">Schema</uni-option>
-  <uni-option (click)="onTypescript()">Interface</uni-option>
+  <uni-option (click)="toggleGrid('editor')">Editor</uni-option>
+  <uni-option (click)="toggleGrid('tree')">Tree</uni-option>
+  <uni-option (click)="toggleGrid('schema')">Schema</uni-option>
+  <uni-option (click)="toggleGrid('typescript')">Typescript</uni-option>
 </ng-template>

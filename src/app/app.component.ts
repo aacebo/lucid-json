@@ -1,9 +1,10 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { UniToastService, UniToastType, UniToastPosition } from '@uniform/components';
 import CodeMirror from 'codemirror';
 
 import { ElectronService } from './core/services/electron';
 import { ISystem, SystemService } from './resources/system';
-import { FileService, IFile } from './resources/file';
+import { FileService, IFile, IGrid } from './resources/file';
 import { EditorService } from './resources/editor';
 
 @Component({
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
     readonly fileService: FileService,
     readonly editorService: EditorService,
     private readonly _electronService: ElectronService,
+    private readonly _toastService: UniToastService,
   ) { }
 
   ngOnInit() {
@@ -53,8 +55,8 @@ export class AppComponent implements OnInit {
     this.fileService.remove(e);
   }
 
-  onVisible(e: { path: string; tree?: boolean; schema?: boolean; typescript?: boolean }) {
-    this.fileService.setVisible(e.path, e.tree, e.schema, e.typescript);
+  onGrid(e: { path: string; grid: IGrid }) {
+    this.fileService.setGrid(e.path, e.grid);
   }
 
   onCursorChange(e: CodeMirror.Position) {
@@ -63,5 +65,15 @@ export class AppComponent implements OnInit {
 
   onFormat(path: string, pretty: boolean) {
     this.fileService.format(path, pretty);
+  }
+
+  onClipboard(e: string) {
+    this._electronService.clipboard.writeText(e, 'clipboard');
+    this._toastService.open({
+      type: UniToastType.Success,
+      position: UniToastPosition.BottomRight,
+      message: 'Copied to clipboard!',
+      duration: 5000,
+    });
   }
 }

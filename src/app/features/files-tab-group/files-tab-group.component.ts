@@ -1,7 +1,8 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { IUniJsonTreeNode } from '@uniform/components';
 import CodeMirror from 'codemirror';
 
-import { IFile } from '../../resources/file';
+import { IFile, IGrid } from '../../resources/file';
 
 @Component({
   selector: 'luc-files-tab-group',
@@ -42,7 +43,8 @@ export class FilesTabGroupComponent {
   @Output() edit = new EventEmitter<{ e: string; path: string; }>();
   @Output() activate = new EventEmitter<string>();
   @Output() remove = new EventEmitter<string>();
-  @Output() visible = new EventEmitter<{ path: string; tree?: boolean; schema?: boolean; typescript?: boolean }>();
+  @Output() grid = new EventEmitter<{ path: string; grid: IGrid }>();
+  @Output() clipboard = new EventEmitter<string>();
 
   // editor
   @Output() cursorChange = new EventEmitter<CodeMirror.Position>();
@@ -51,30 +53,13 @@ export class FilesTabGroupComponent {
 
   constructor(private readonly _cdr: ChangeDetectorRef) { }
 
-  onTree() {
-    this.visible.emit({
+  toggleGrid(key: keyof IGrid) {
+    this.grid.emit({
       path: this.active,
-      tree: !this.files[this.active].visible.tree,
-      schema: this.files[this.active].visible.schema,
-      typescript: this.files[this.active].visible.typescript,
-    });
-  }
-
-  onSchema() {
-    this.visible.emit({
-      path: this.active,
-      tree: this.files[this.active].visible.tree,
-      schema: !this.files[this.active].visible.schema,
-      typescript: this.files[this.active].visible.typescript,
-    });
-  }
-
-  onTypescript() {
-    this.visible.emit({
-      path: this.active,
-      tree: this.files[this.active].visible.tree,
-      schema: this.files[this.active].visible.schema,
-      typescript: !this.files[this.active].visible.typescript,
+      grid: {
+        ...this.files[this.active].grid,
+        [key]: !this.files[this.active].grid[key],
+      },
     });
   }
 
@@ -96,5 +81,9 @@ export class FilesTabGroupComponent {
     }
 
     this.remove.emit(e);
+  }
+
+  onPropertyValueClick(e: IUniJsonTreeNode) {
+    this.clipboard.emit(e.description);
   }
 }

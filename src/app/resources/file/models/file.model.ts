@@ -1,12 +1,9 @@
+import { IGrid } from './grid.model';
+
 export interface IFile {
   readonly name: string;
   readonly path: string;
-  readonly visible: {
-    tree?: boolean;
-    schema?: boolean;
-    typescript?: boolean;
-  };
-
+  readonly grid: IGrid;
   text: string;
   json?: any;
   schema?: any;
