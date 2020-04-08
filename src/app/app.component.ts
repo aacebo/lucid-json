@@ -53,8 +53,8 @@ export class AppComponent implements OnInit {
     this.fileService.remove(e);
   }
 
-  onTree(e: { path: string; tree: boolean }) {
-    this.fileService.setTree(e.path, e.tree);
+  onVisible(e: { path: string; tree?: boolean; schema?: boolean; typescript?: boolean }) {
+    this.fileService.setVisible(e.path, e.tree, e.schema, e.typescript);
   }
 
   onCursorChange(e: CodeMirror.Position) {

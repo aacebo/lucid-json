@@ -42,7 +42,7 @@ export class FilesTabGroupComponent {
   @Output() edit = new EventEmitter<{ e: string; path: string; }>();
   @Output() activate = new EventEmitter<string>();
   @Output() remove = new EventEmitter<string>();
-  @Output() tree = new EventEmitter<{ path: string; tree: boolean; }>();
+  @Output() visible = new EventEmitter<{ path: string; tree?: boolean; schema?: boolean; typescript?: boolean }>();
 
   // editor
   @Output() cursorChange = new EventEmitter<CodeMirror.Position>();
@@ -52,7 +52,30 @@ export class FilesTabGroupComponent {
   constructor(private readonly _cdr: ChangeDetectorRef) { }
 
   onTree() {
-    this.tree.emit({ path: this.active, tree: !this.files[this.active].showTree });
+    this.visible.emit({
+      path: this.active,
+      tree: !this.files[this.active].visible.tree,
+      schema: this.files[this.active].visible.schema,
+      typescript: this.files[this.active].visible.typescript,
+    });
+  }
+
+  onSchema() {
+    this.visible.emit({
+      path: this.active,
+      tree: this.files[this.active].visible.tree,
+      schema: !this.files[this.active].visible.schema,
+      typescript: this.files[this.active].visible.typescript,
+    });
+  }
+
+  onTypescript() {
+    this.visible.emit({
+      path: this.active,
+      tree: this.files[this.active].visible.tree,
+      schema: this.files[this.active].visible.schema,
+      typescript: !this.files[this.active].visible.typescript,
+    });
   }
 
   onTextChange(e: string) {

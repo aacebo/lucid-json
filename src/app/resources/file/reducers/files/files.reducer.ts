@@ -11,6 +11,7 @@ export const files = createReducer<{ [path: string]: IFile }>(
       name: a.name,
       path: a.path,
       text: a.text,
+      visible: {},
     };
   }),
   mutableOn(actions.update, (_, a) => {
@@ -21,8 +22,10 @@ export const files = createReducer<{ [path: string]: IFile }>(
     _[a.path] = undefined;
     delete _[a.path];
   }),
-  mutableOn(actions.setTree, (_, a) => {
-    _[a.path].showTree = a.tree;
+  mutableOn(actions.setVisible, (_, a) => {
+    _[a.path].visible.tree = a.tree;
+    _[a.path].visible.schema = a.schema;
+    _[a.path].visible.typescript = a.typescript;
   }),
   mutableOn(actions.format, (_, a) => {
     let text: string;

@@ -27,21 +27,21 @@
                 (cursorChange)="cursorChange.emit($event)"
               ></luc-json-editor>
             </uni-split-area>
-            <uni-split-area *ngIf="files[path]?.showTree">
+            <uni-split-area *ngIf="files[path]?.visible?.tree">
               <uni-scroll>
                 <uni-json-tree [json]="files[path]?.json"></uni-json-tree>
               </uni-scroll>
             </uni-split-area>
           </uni-vertical-split>
         </uni-split-area>
-        <uni-split-area>
+        <uni-split-area *ngIf="files[path]?.visible?.schema || files[path]?.visible?.typescript">
           <uni-vertical-split>
-            <uni-split-area>
+            <uni-split-area *ngIf="files[path]?.visible?.schema">
               <uni-scroll>
                 <uni-json-tree [json]="files[path]?.schema"></uni-json-tree>
               </uni-scroll>
             </uni-split-area>
-            <uni-split-area>
+            <uni-split-area *ngIf="files[path]?.visible?.typescript">
               <uni-scroll>
                 <uni-code language="typescript" [code]="files[path]?.typescript"></uni-code>
               </uni-scroll>
@@ -55,6 +55,6 @@
 
 <ng-template #ctxMenuTpl>
   <uni-option (click)="onTree()">Tree</uni-option>
-  <uni-option>Schema</uni-option>
-  <uni-option>Interface</uni-option>
+  <uni-option (click)="onSchema()">Schema</uni-option>
+  <uni-option (click)="onTypescript()">Interface</uni-option>
 </ng-template>

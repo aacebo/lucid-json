@@ -31,8 +31,8 @@ export class FileService {
     this._store$.dispatch(actions.setActive({ path }));
   }
 
-  setTree(path: string, tree: boolean) {
-    this._store$.dispatch(actions.setTree({ path, tree }));
+  setVisible(path: string, tree?: boolean, schema?: boolean, typescript?: boolean) {
+    this._store$.dispatch(actions.setVisible({ path, tree, schema, typescript }));
   }
 
   update(path: string, text: string) {
