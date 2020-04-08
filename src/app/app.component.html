@@ -17,6 +17,7 @@
   *ngIf="fileService.active$ | async; let active"
   [active]="active"
   [cursor]="editorService.cursor$ | async"
+  [lines]="fileService.lines$ | async"
   (minify)="onFormat($event, false)"
   (beautify)="onFormat($event, true)"
 ></luc-actionbar>

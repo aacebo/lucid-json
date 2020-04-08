@@ -11,6 +11,7 @@ export class ActionbarComponent {
   @Input() active?: string;
   @Input() cursor?: CodeMirror.Position;
   @Input() errors = 5;
+  @Input() lines = 0;
 
   @Output() minify = new EventEmitter<string>();
   @Output() beautify = new EventEmitter<string>();

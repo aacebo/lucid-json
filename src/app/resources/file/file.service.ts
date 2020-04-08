@@ -15,12 +15,14 @@ export class FileService {
   readonly files$: Observable<{ [path: string]: IFile }>;
   readonly paths$: Observable<string[]>;
   readonly active$: Observable<string | undefined>;
+  readonly lines$: Observable<number>;
 
   constructor(private readonly _store$: Store<IFileState>) {
     this.state$ = this._store$.pipe(select(selectors.selectState));
     this.files$ = this._store$.pipe(select(selectors.selectFiles));
     this.paths$ = this._store$.pipe(select(selectors.selectPaths));
     this.active$ = this._store$.pipe(select(selectors.selectActive));
+    this.lines$ = this._store$.pipe(select(selectors.selectLines));
   }
 
   set(name: string, path: string, text: string) {
