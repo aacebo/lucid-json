@@ -25,8 +25,6 @@ function getSystem() {
 let app: App;
 
 class App {
-  readonly file: File;
-
   private _window: electron.BrowserWindow;
   private _menu = new AppMenu();
 
@@ -49,10 +47,21 @@ class App {
       },
     });
 
-    this.file = new File(this._window);
+    this._menu.openFile$.subscribe(async () => {
+      const res = await electron.dialog.showOpenDialog({
+        properties: ['openFile'],
+        filters: [{ name: 'json', extensions: ['json'] }],
+      });
 
-    this._menu.click$.subscribe(v => {
-      this._window.webContents.send(v.cmd, v.data);
+      if (res.filePaths.length === 1) {
+        const file = await File.read(res.filePaths[0]);
+
+        this._window.webContents.send('file.open', {
+          name: file.name,
+          path: res.filePaths[0],
+          text: file.text,
+        });
+      }
     });
 
     this._window.loadURL(url.format({

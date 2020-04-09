@@ -27,19 +27,12 @@ export class AppComponent implements OnInit {
       this.systemService.setSystem(system);
     });
 
-    this._electronService.on('open', async () => {
-      const res = await this._electronService.showOpenDialog({
-        properties: ['openFile'],
-        filters: [{ name: 'json', extensions: ['json'] }],
-      });
-
-      if (res.filePaths.length > 0) {
-        this._electronService.send('file.open', res.filePaths[0]);
-      }
+    this._electronService.on('file.open', (e: IFile) => {
+      this.fileService.set(e.path, e.name, e.text);
     });
 
-    this._electronService.on('file.read', (e: IFile) => {
-      this.fileService.set(e.path, e.name, e.text);
+    this._electronService.on('file.new', () => {
+      this.fileService.set();
     });
   }
 
