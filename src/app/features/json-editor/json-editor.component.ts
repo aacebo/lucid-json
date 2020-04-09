@@ -7,6 +7,7 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 import { UniFormFieldControlBase, uniFormFieldProvider } from '@uniform/components';
 
@@ -45,11 +46,16 @@ import 'codemirror/addon/search/searchcursor.js';
   encapsulation: ViewEncapsulation.None,
 })
 export class JsonEditorComponent extends UniFormFieldControlBase<string> implements OnDestroy {
+  @Input() mac?: boolean;
+
   @Output() cursorChange = new EventEmitter<CodeMirror.Position>();
+  @Output() save = new EventEmitter<void>();
 
   @ViewChild('textarea')
   get textarea() { return this._textarea; }
   set textarea(v) {
+    const saveKey = `${ this.mac ? 'Cmd' : 'Ctrl' }-S`;
+
     this._textarea = v;
     this.editor = CodeMirror.fromTextArea(this.textarea.nativeElement, {
       lineNumbers: true,
@@ -71,6 +77,7 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
       autoCloseBrackets: true,
       matchBrackets: true,
       styleActiveLine: { nonEmpty: true },
+      extraKeys: { [saveKey]: () => this.save.emit() },
     });
 
     this.editor.on('change', this.onEditorChange.bind(this));

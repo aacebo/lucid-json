@@ -46,4 +46,12 @@ export const files = createReducer<{ [path: string]: IFile }>(
     _[a.id].json = a.json;
     _[a.id].schema = a.schema;
   }),
+  mutableOn(actions.save, (_, a) => {
+    if (a.saveAs) {
+      _[a.id].path = a.path;
+      _[a.id].name = a.name;
+    }
+
+    _[a.id].dirty = false;
+  }),
 );

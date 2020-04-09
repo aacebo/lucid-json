@@ -55,6 +55,9 @@ class App {
 
     this._menu.openFile$.subscribe(this._onOpenFile.bind(this));
     this._menu.newFile$.subscribe(() => this._window.webContents.send('file.new'));
+
+    electron.ipcMain.on('file.save', this._onSaveFile.bind(this));
+
     this._window.webContents.on('dom-ready', this._onDomReady.bind(this));
     this._window.on('closed', () => this._window = null);
   }
@@ -72,6 +75,27 @@ class App {
         name: file.name,
         path: res.filePaths[0],
         text: file.text,
+      });
+    }
+  }
+
+  private async _onSaveFile(_: electron.IpcMainEvent, e: { path?: string; text: string; }) {
+    if (e.path) {
+      await File.write(e.path, e.text);
+      _.sender.send('file.save.return');
+      return;
+    }
+
+    const res = await electron.dialog.showSaveDialog({
+      filters: [{ name: 'json', extensions: ['json'] }],
+    });
+
+    if (res.filePath) {
+      const name = await File.write(res.filePath, e.text);
+
+      _.sender.send('file.save.return', {
+        path: res.filePath,
+        name,
       });
     }
   }

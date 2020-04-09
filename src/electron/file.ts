@@ -16,4 +16,12 @@ export class File {
       text,
     };
   }
+
+  static async write(filePath: string, text: string) {
+    const name = path.basename(filePath);
+    const stream = fs.createWriteStream(filePath);
+
+    stream.write(text);
+    return name;
+  }
 }

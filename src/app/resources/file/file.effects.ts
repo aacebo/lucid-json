@@ -9,7 +9,7 @@ import * as actions from './actions';
 
 @Injectable()
 export class FileEffects {
-  readonly set$ = createEffect(() => this._actions$.pipe(
+  readonly generate$ = createEffect(() => this._actions$.pipe(
     ofType(actions.set, actions.update),
     map(a => {
       const json = tryParseJSON(a.text);

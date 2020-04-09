@@ -3,6 +3,7 @@
 ></luc-titlebar>
 
 <luc-files-tab-group
+  [mac]="systemService.isMac$ | async"
   [active]="fileService.active$ | async"
   [ids]="fileService.ids$ | async"
   [files]="fileService.files$ | async"
@@ -12,6 +13,7 @@
   (grid)="onGrid($event)"
   (cursorChange)="onCursorChange($event)"
   (clipboard)="onClipboard($event)"
+  (save)="onSave($event)"
 ></luc-files-tab-group>
 
 <luc-actionbar

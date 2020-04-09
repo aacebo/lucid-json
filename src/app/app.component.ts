@@ -48,6 +48,18 @@ export class AppComponent implements OnInit {
     this.fileService.remove(e);
   }
 
+  onSave(e: { id: string; path?: string; text: string }) {
+    this._electronService.once('file.save.return', (file?: { path: string; name: string; }) => {
+      if (file) {
+        this.fileService.save(e.id, file.path, file.name, true);
+      } else {
+        this.fileService.save(e.id);
+      }
+    });
+
+    this._electronService.send('file.save', { path: e.path, text: e.text });
+  }
+
   onGrid(e: { id: string; grid: IGrid }) {
     this.fileService.grid(e.id, e.grid);
   }

@@ -28,9 +28,11 @@
           <uni-vertical-split flex="0 0 75%">
             <uni-split-area *ngIf="files[id]?.grid?.editor">
               <luc-json-editor
+                [mac]="mac"
                 [ngModel]="files[id]?.text"
                 (ngModelChange)="onTextChange($event)"
                 (cursorChange)="cursorChange.emit($event)"
+                (save)="onSave()"
               ></luc-json-editor>
             </uni-split-area>
             <uni-split-area *ngIf="files[id]?.grid?.tree">

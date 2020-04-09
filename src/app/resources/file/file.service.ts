@@ -42,8 +42,8 @@ export class FileService {
     this._store$.dispatch(actions.format({ id, pretty }));
   }
 
-  save(id: string) {
-    this._store$.dispatch(actions.save({ id }));
+  save(id: string, path?: string, name?: string, saveAs?: boolean) {
+    this._store$.dispatch(actions.save({ id, path, name, saveAs }));
   }
 
   activate(id: string) {

@@ -14,6 +14,14 @@ import { IFile, IGrid } from '../../resources/file';
 })
 export class FilesTabGroupComponent {
   @Input()
+  get mac() { return this._mac; }
+  set mac(v) {
+    this._mac = v;
+    this._cdr.markForCheck();
+  }
+  private _mac?: boolean;
+
+  @Input()
   get files() { return this._files; }
   set files(v) {
     this._files = v;
@@ -43,10 +51,9 @@ export class FilesTabGroupComponent {
   @Output() edit = new EventEmitter<{ e: string; id: string; }>();
   @Output() activate = new EventEmitter<string>();
   @Output() remove = new EventEmitter<string>();
-  @Output() grid = new EventEmitter<{ id: string; grid: IGrid }>();
+  @Output() grid = new EventEmitter<{ id: string; grid: IGrid; }>();
   @Output() clipboard = new EventEmitter<string>();
-
-  // editor
+  @Output() save = new EventEmitter<{ id: string; path?: string; text: string; }>();
   @Output() cursorChange = new EventEmitter<CodeMirror.Position>();
 
   tab = 0;
@@ -85,5 +92,15 @@ export class FilesTabGroupComponent {
 
   onPropertyValueClick(e: IUniJsonTreeNode) {
     this.clipboard.emit(e.description);
+  }
+
+  onSave() {
+    if (this.files[this.active].dirty) {
+      this.save.emit({
+        id: this.active,
+        path: this.files[this.active].path,
+        text: this.files[this.active].text,
+      });
+    }
   }
 }

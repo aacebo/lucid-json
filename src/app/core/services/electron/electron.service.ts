@@ -53,11 +53,15 @@ export class ElectronService {
     });
   }
 
-  on(name: string, cb: (...args) => void) {
-    this._renderer.on(name, (_: Event, data: any) => {
-      this._ngZone.run(() => {
-        cb(data);
-      });
+  on(name: string, cb: (...args: any[]) => void) {
+    this._renderer.on(name, (_, data: any) => {
+      this._ngZone.run(() => cb(data));
+    });
+  }
+
+  once(name: string, cb: (...args: any[]) => void) {
+    this._renderer.once(name, (_, data: any) => {
+      this._ngZone.run(() => cb(data));
     });
   }
 
