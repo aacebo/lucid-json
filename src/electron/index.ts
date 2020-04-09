@@ -47,70 +47,51 @@ class App {
       },
     });
 
-    this._menu.openFile$.subscribe(async () => {
-      const res = await electron.dialog.showOpenDialog({
-        properties: ['openFile'],
-        filters: [{ name: 'json', extensions: ['json'] }],
-      });
-
-      if (res.filePaths.length === 1) {
-        const file = await File.read(res.filePaths[0]);
-
-        this._window.webContents.send('file.open', {
-          name: file.name,
-          path: res.filePaths[0],
-          text: file.text,
-        });
-      }
-    });
-
     this._window.loadURL(url.format({
       pathname: path.join(__dirname, '../index.html'),
       protocol: 'file:',
       slashes: true,
     }));
 
-    this._window.webContents.on('dom-ready', () => {
-      this._window.show();
-      this._window.webContents.send('system', getSystem());
-
-      if (dev) {
-        this._window.webContents.openDevTools();
-      }
-    });
-
-    this._window.on('closed', () => {
-      this._window = null;
-    });
+    this._menu.openFile$.subscribe(this._onOpenFile.bind(this));
+    this._window.webContents.on('dom-ready', this._onDomReady.bind(this));
+    this._window.on('closed', () => this._window = null);
   }
 
-  quit() {
-    electron.app.quit();
+  private async _onOpenFile() {
+    const res = await electron.dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [{ name: 'json', extensions: ['json'] }],
+    });
+
+    if (res.filePaths.length === 1) {
+      const file = await File.read(res.filePaths[0]);
+
+      this._window.webContents.send('file.open', {
+        name: file.name,
+        path: res.filePaths[0],
+        text: file.text,
+      });
+    }
+  }
+
+  private _onDomReady() {
+    this._window.show();
+    this._window.webContents.send('system', getSystem());
+
+    if (dev) {
+      this._window.webContents.openDevTools();
+    }
   }
 }
 
 electron.app.on('ready', () => {
   devtools.default(devtools.REDUX_DEVTOOLS);
-  electron.session.defaultSession.webRequest.onHeadersReceived((details, cb) => {
-    cb({
-      responseHeaders: {
-        ...details.responseHeaders,
-        'Content-Security-Policy': [
-          'default-src \'self\'',
-          'style-src \'self\' \'unsafe-inline\'',
-          'script-src \'self\'',
-          'connect-src * data: blob: \'unsafe-inline\'',
-          'img-src \'self\' data:',
-        ],
-      },
-    });
-  });
-
   app = new App();
 });
 
 electron.app.on('window-all-closed', () => {
-  app.quit();
+  electron.app.quit();
 });
 
 electron.app.on('activate', () => {
