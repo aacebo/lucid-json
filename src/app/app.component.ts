@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
   }
 
   onActivate(e: string) {
-    this.fileService.setActive(e);
+    this.fileService.activate(e);
   }
 
   onRemove(e: string) {
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
   }
 
   onGrid(e: { id: string; grid: IGrid }) {
-    this.fileService.setGrid(e.id, e.grid);
+    this.fileService.grid(e.id, e.grid);
   }
 
   onCursorChange(e: CodeMirror.Position) {

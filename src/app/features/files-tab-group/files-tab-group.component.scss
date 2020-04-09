@@ -26,6 +26,11 @@
 
       .tab-label {
         flex: 1;
+
+        &.new {
+          font-style: italic;
+          color: var(--white-a20);
+        }
       }
 
       .close-icon {

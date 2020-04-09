@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 const isMac = process.platform === 'darwin';
 
 export class AppMenu {
+  readonly newFile$ = new Subject<void>();
   readonly openFile$ = new Subject<void>();
 
   private readonly _menu: (MenuItemConstructorOptions | MenuItem)[] = [
@@ -24,6 +25,7 @@ export class AppMenu {
     {
       label: 'File',
       submenu: [
+        { label: 'New', click: () => this.newFile$.next() },
         { label: 'Open', click: () => this.openFile$.next() },
         { type: 'separator' },
         isMac ? { role: 'close' } : { role: 'quit' },

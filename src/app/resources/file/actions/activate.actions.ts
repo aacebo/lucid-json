@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-export const setActive = createAction(
-  '[FILE] SetActive',
+export const activate = createAction(
+  '[FILE] Activate',
   props<{ readonly id: string }>(),
 );

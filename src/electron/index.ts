@@ -54,6 +54,7 @@ class App {
     }));
 
     this._menu.openFile$.subscribe(this._onOpenFile.bind(this));
+    this._menu.newFile$.subscribe(() => this._window.webContents.send('file.new'));
     this._window.webContents.on('dom-ready', this._onDomReady.bind(this));
     this._window.on('closed', () => this._window = null);
   }

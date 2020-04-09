@@ -11,19 +11,19 @@ export const files = createReducer<{ [path: string]: IFile }>(
       id: a.id,
       name: a.name,
       path: a.path,
-      text: a.text,
+      text: a.text || '',
       grid: { editor: true },
     };
   }),
   mutableOn(actions.update, (_, a) => {
-    _[a.id].text = a.text;
+    _[a.id].text = a.text || '';
     _[a.id].dirty = true;
   }),
   mutableOn(actions.remove, (_, a) => {
     _[a.id] = undefined;
     delete _[a.id];
   }),
-  mutableOn(actions.setGrid, (_, a) => {
+  mutableOn(actions.grid, (_, a) => {
     _[a.id].grid = a.grid;
   }),
   mutableOn(actions.format, (_, a) => {
@@ -41,7 +41,7 @@ export const files = createReducer<{ [path: string]: IFile }>(
       dirty: true,
     };
   }),
-  mutableOn(actions.setGenerated, (_, a) => {
+  mutableOn(actions.generate, (_, a) => {
     _[a.id].typescript = a.typescript;
     _[a.id].json = a.json;
     _[a.id].schema = a.schema;

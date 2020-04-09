@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
-export const setGenerated = createAction(
-  '[FILE] SetGenerated',
+export const generate = createAction(
+  '[FILE] Generate',
   props<{
     readonly id: string;
     readonly typescript?: string;

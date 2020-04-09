@@ -16,7 +16,7 @@ export class FileEffects {
       const schema = json ? toJsonSchema(json) : undefined;
       const ts = json ? jsonToTs(json) : undefined;
 
-      return actions.setGenerated({
+      return actions.generate({
         id: a.id,
         json,
         schema,

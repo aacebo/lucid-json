@@ -1,7 +1,13 @@
 <uni-tab-group [(active)]="tab" (activeChange)="onTabChange($event)">
   <uni-tab *ngFor="let id of ids">
     <ng-template uniTabLabel>
-      <div class="uni-ellipsis tab-label">{{ files[id]?.name }}</div>
+      <div
+        class="uni-ellipsis tab-label"
+        [class.new]="!files[id]?.path"
+      >
+        {{ files[id]?.name || 'New File' }}
+      </div>
+
       <uni-icon
         class="close-icon"
         icon="mdi-close"

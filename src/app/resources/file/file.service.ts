@@ -30,14 +30,6 @@ export class FileService {
     this._store$.dispatch(actions.set({ id: uuid.v1(), path, name, text }));
   }
 
-  setActive(id: string) {
-    this._store$.dispatch(actions.setActive({ id }));
-  }
-
-  setGrid(id: string, grid: IGrid) {
-    this._store$.dispatch(actions.setGrid({ id, grid }));
-  }
-
   update(id: string, text?: string) {
     this._store$.dispatch(actions.update({ id, text }));
   }
@@ -48,5 +40,17 @@ export class FileService {
 
   format(id: string, pretty: boolean) {
     this._store$.dispatch(actions.format({ id, pretty }));
+  }
+
+  save(id: string) {
+    this._store$.dispatch(actions.save({ id }));
+  }
+
+  activate(id: string) {
+    this._store$.dispatch(actions.activate({ id }));
+  }
+
+  grid(id: string, grid: IGrid) {
+    this._store$.dispatch(actions.grid({ id, grid }));
   }
 }
