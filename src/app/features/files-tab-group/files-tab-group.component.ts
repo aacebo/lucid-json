@@ -39,11 +39,11 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
   }
   private _active?: string;
 
-  @Output() edit = new EventEmitter<{ e: string; id: string; }>();
   @Output() activate = new EventEmitter<string>();
   @Output() remove = new EventEmitter<string>();
-  @Output() grid = new EventEmitter<{ id: string; grid: IGrid; }>();
   @Output() clipboard = new EventEmitter<string>();
+  @Output() edit = new EventEmitter<{ e: string; id: string; }>();
+  @Output() grid = new EventEmitter<{ id: string; grid: IGrid; }>();
   @Output() save = new EventEmitter<{ id: string; path?: string; text: string; }>();
   @Output() cursorChange = new EventEmitter<CodeMirror.Position>();
 

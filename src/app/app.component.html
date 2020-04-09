@@ -2,24 +2,26 @@
   *ngIf="(systemService.isMac$ | async)"
 ></luc-titlebar>
 
-<luc-files-tab-group
-  [active]="fileService.active$ | async"
-  [ids]="fileService.ids$ | async"
-  [files]="fileService.files$ | async"
-  (edit)="onEdit($event)"
-  (activate)="onActivate($event)"
-  (remove)="onRemove($event)"
-  (grid)="onGrid($event)"
-  (cursorChange)="onCursorChange($event)"
-  (clipboard)="onClipboard($event)"
-  (save)="onSave($event)"
-></luc-files-tab-group>
+<ng-container *ngIf="fileService.active$ | async; let active">
+  <luc-files-tab-group
+    [active]="active"
+    [ids]="fileService.ids$ | async"
+    [files]="fileService.files$ | async"
+    (edit)="onEdit($event)"
+    (activate)="onActivate($event)"
+    (remove)="onRemove($event)"
+    (grid)="onGrid($event)"
+    (cursorChange)="onCursorChange($event)"
+    (clipboard)="onClipboard($event)"
+    (save)="onSave($event)"
+  ></luc-files-tab-group>
 
-<luc-actionbar
-  *ngIf="fileService.active$ | async; let active"
-  [active]="active"
-  [cursor]="editorService.cursor$ | async"
-  [lines]="fileService.lines$ | async"
-  (minify)="onFormat($event, false)"
-  (beautify)="onFormat($event, true)"
-></luc-actionbar>
+  <luc-actionbar
+    *ngIf="active"
+    [active]="active"
+    [cursor]="editorService.cursor$ | async"
+    [lines]="fileService.lines$ | async"
+    (minify)="onFormat($event, false)"
+    (beautify)="onFormat($event, true)"
+  ></luc-actionbar>
+</ng-container>
