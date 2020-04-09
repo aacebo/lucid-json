@@ -39,12 +39,12 @@ export class AppComponent implements OnInit {
     });
 
     this._electronService.on('file.read', (e: IFile) => {
-      this.fileService.set(e.name, e.path, e.text);
+      this.fileService.set(e.path, e.name, e.text);
     });
   }
 
-  onEdit(e: { e: string; path: string; }) {
-    this.fileService.update(e.path, e.e);
+  onEdit(e: { e: string; id: string; }) {
+    this.fileService.update(e.id, e.e);
   }
 
   onActivate(e: string) {
@@ -55,16 +55,16 @@ export class AppComponent implements OnInit {
     this.fileService.remove(e);
   }
 
-  onGrid(e: { path: string; grid: IGrid }) {
-    this.fileService.setGrid(e.path, e.grid);
+  onGrid(e: { id: string; grid: IGrid }) {
+    this.fileService.setGrid(e.id, e.grid);
   }
 
   onCursorChange(e: CodeMirror.Position) {
     this.editorService.setCursor(e);
   }
 
-  onFormat(path: string, pretty: boolean) {
-    this.fileService.format(path, pretty);
+  onFormat(id: string, pretty: boolean) {
+    this.fileService.format(id, pretty);
   }
 
   onClipboard(e: string) {

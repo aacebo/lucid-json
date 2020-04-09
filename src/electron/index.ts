@@ -37,7 +37,7 @@ class App {
       height: 600,
       minWidth: 600,
       minHeight: 600,
-      autoHideMenuBar: true,
+      autoHideMenuBar: false,
       darkTheme: true,
       show: false,
       frame: process.platform === 'darwin' ? false : true,

@@ -4,5 +4,5 @@ import { IGrid } from '../models';
 
 export const setGrid = createAction(
   '[FILE] SetGrid',
-  props<{ readonly path: string; readonly grid?: IGrid; }>(),
+  props<{ readonly id: string; readonly grid?: IGrid; }>(),
 );

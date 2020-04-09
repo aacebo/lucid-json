@@ -1,9 +1,10 @@
 import { IGrid } from './grid.model';
 
 export interface IFile {
-  readonly name: string;
-  readonly path: string;
+  readonly id: string;
   readonly grid: IGrid;
+  path: string;
+  name?: string;
   text: string;
   json?: any;
   schema?: any;

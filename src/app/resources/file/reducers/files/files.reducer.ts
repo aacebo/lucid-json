@@ -7,7 +7,8 @@ import * as actions from '../../actions';
 export const files = createReducer<{ [path: string]: IFile }>(
   { },
   mutableOn(actions.set, (_, a) => {
-    _[a.path] = {
+    _[a.id] = {
+      id: a.id,
       name: a.name,
       path: a.path,
       text: a.text,
@@ -15,34 +16,34 @@ export const files = createReducer<{ [path: string]: IFile }>(
     };
   }),
   mutableOn(actions.update, (_, a) => {
-    _[a.path].text = a.text;
-    _[a.path].dirty = true;
+    _[a.id].text = a.text;
+    _[a.id].dirty = true;
   }),
   mutableOn(actions.remove, (_, a) => {
-    _[a.path] = undefined;
-    delete _[a.path];
+    _[a.id] = undefined;
+    delete _[a.id];
   }),
   mutableOn(actions.setGrid, (_, a) => {
-    _[a.path].grid = a.grid;
+    _[a.id].grid = a.grid;
   }),
   mutableOn(actions.format, (_, a) => {
     let text: string;
 
     if (a.pretty) {
-      text = JSON.stringify(_[a.path].json, undefined, 2);
+      text = JSON.stringify(_[a.id].json, undefined, 2);
     } else {
-      text = JSON.stringify(_[a.path].json);
+      text = JSON.stringify(_[a.id].json);
     }
 
-    _[a.path] = {
-      ..._[a.path],
+    _[a.id] = {
+      ..._[a.id],
       text,
       dirty: true,
     };
   }),
   mutableOn(actions.setGenerated, (_, a) => {
-    _[a.path].typescript = a.typescript;
-    _[a.path].json = a.json;
-    _[a.path].schema = a.schema;
+    _[a.id].typescript = a.typescript;
+    _[a.id].json = a.json;
+    _[a.id].schema = a.schema;
   }),
 );

@@ -17,7 +17,7 @@ export class FileEffects {
       const ts = json ? jsonToTs(json) : undefined;
 
       return actions.setGenerated({
-        path: a.path,
+        id: a.id,
         json,
         schema,
         typescript: ts ? ts.join('\n\n') : undefined,

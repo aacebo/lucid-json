@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import * as uuid from 'uuid';
 
 import { IFileState } from './file.state';
 import { IFile, IGrid } from './models';
@@ -12,40 +13,40 @@ import * as actions from './actions';
 })
 export class FileService {
   readonly state$: Observable<IFileState>;
-  readonly files$: Observable<{ [path: string]: IFile }>;
-  readonly paths$: Observable<string[]>;
+  readonly files$: Observable<{ [id: string]: IFile }>;
+  readonly ids$: Observable<string[]>;
   readonly active$: Observable<string | undefined>;
   readonly lines$: Observable<number>;
 
   constructor(private readonly _store$: Store<IFileState>) {
     this.state$ = this._store$.pipe(select(selectors.selectState));
     this.files$ = this._store$.pipe(select(selectors.selectFiles));
-    this.paths$ = this._store$.pipe(select(selectors.selectPaths));
+    this.ids$ = this._store$.pipe(select(selectors.selectIds));
     this.active$ = this._store$.pipe(select(selectors.selectActive));
     this.lines$ = this._store$.pipe(select(selectors.selectLines));
   }
 
-  set(name: string, path: string, text: string) {
-    this._store$.dispatch(actions.set({ name, path, text }));
+  set(path?: string, name?: string, text?: string) {
+    this._store$.dispatch(actions.set({ id: uuid.v1(), path, name, text }));
   }
 
-  setActive(path: string) {
-    this._store$.dispatch(actions.setActive({ path }));
+  setActive(id: string) {
+    this._store$.dispatch(actions.setActive({ id }));
   }
 
-  setGrid(path: string, grid: IGrid) {
-    this._store$.dispatch(actions.setGrid({ path, grid }));
+  setGrid(id: string, grid: IGrid) {
+    this._store$.dispatch(actions.setGrid({ id, grid }));
   }
 
-  update(path: string, text: string) {
-    this._store$.dispatch(actions.update({ path, text }));
+  update(id: string, text?: string) {
+    this._store$.dispatch(actions.update({ id, text }));
   }
 
-  remove(path: string) {
-    this._store$.dispatch(actions.remove({ path }));
+  remove(id: string) {
+    this._store$.dispatch(actions.remove({ id }));
   }
 
-  format(path: string, pretty: boolean) {
-    this._store$.dispatch(actions.format({ path, pretty }));
+  format(id: string, pretty: boolean) {
+    this._store$.dispatch(actions.format({ id, pretty }));
   }
 }
