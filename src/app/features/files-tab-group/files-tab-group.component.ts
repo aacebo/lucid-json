@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
-import { IUniJsonTreeNode } from '@uniform/components';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { IUniJsonTreeNode, UniHotkeyService } from '@uniform/components';
 import CodeMirror from 'codemirror';
 
 import { IFile, IGrid } from '../../resources/file';
@@ -12,15 +12,7 @@ import { IFile, IGrid } from '../../resources/file';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class FilesTabGroupComponent {
-  @Input()
-  get mac() { return this._mac; }
-  set mac(v) {
-    this._mac = v;
-    this._cdr.markForCheck();
-  }
-  private _mac?: boolean;
-
+export class FilesTabGroupComponent implements OnInit, OnDestroy {
   @Input()
   get files() { return this._files; }
   set files(v) {
@@ -57,7 +49,18 @@ export class FilesTabGroupComponent {
 
   tab = 0;
 
-  constructor(private readonly _cdr: ChangeDetectorRef) { }
+  constructor(
+    private readonly _hotkeyService: UniHotkeyService,
+    private readonly _cdr: ChangeDetectorRef,
+  ) { }
+
+  ngOnInit() {
+    this._hotkeyService.add('mod+s', 'Save', this._onSave.bind(this));
+  }
+
+  ngOnDestroy() {
+    this._hotkeyService.remove('mod+s');
+  }
 
   toggleGrid(key: keyof IGrid) {
     this.grid.emit({
@@ -93,7 +96,7 @@ export class FilesTabGroupComponent {
     this.clipboard.emit(e.description);
   }
 
-  onSave() {
+  private _onSave() {
     if (this.files[this.active].dirty) {
       this.save.emit({
         id: this.active,

@@ -3,7 +3,6 @@
 ></luc-titlebar>
 
 <luc-files-tab-group
-  [mac]="systemService.isMac$ | async"
   [active]="fileService.active$ | async"
   [ids]="fileService.ids$ | async"
   [files]="fileService.files$ | async"

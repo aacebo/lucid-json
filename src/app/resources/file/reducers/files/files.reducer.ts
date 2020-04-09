@@ -16,8 +16,8 @@ export const files = createReducer<{ [path: string]: IFile }>(
     };
   }),
   mutableOn(actions.update, (_, a) => {
+    _[a.id].dirty = a.text !== _[a.id].text;
     _[a.id].text = a.text || '';
-    _[a.id].dirty = true;
   }),
   mutableOn(actions.remove, (_, a) => {
     _[a.id] = undefined;
@@ -35,10 +35,12 @@ export const files = createReducer<{ [path: string]: IFile }>(
       text = JSON.stringify(_[a.id].json);
     }
 
+    const dirty = text !== _[a.id].text;
+
     _[a.id] = {
       ..._[a.id],
       text,
-      dirty: true,
+      dirty,
     };
   }),
   mutableOn(actions.generate, (_, a) => {

@@ -9,6 +9,7 @@ import {
   UniJsonTreeModule,
   UniIconModule,
   UniCodeModule,
+  UniHotkeyModule,
 } from '@uniform/components';
 
 import { FilesTabGroupComponent } from './files-tab-group.component';
@@ -29,6 +30,7 @@ import { JsonEditorModule } from '../json-editor';
     UniJsonTreeModule,
     UniIconModule,
     UniCodeModule,
+    UniHotkeyModule,
 
     JsonEditorModule,
   ],
