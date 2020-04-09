@@ -68,8 +68,27 @@
 </uni-tab-group>
 
 <ng-template #ctxMenuTpl>
-  <uni-option (click)="toggleGrid('editor')">Editor</uni-option>
-  <uni-option (click)="toggleGrid('tree')">Tree</uni-option>
-  <uni-option (click)="toggleGrid('schema')">Schema</uni-option>
-  <uni-option (click)="toggleGrid('typescript')">Typescript</uni-option>
+  <uni-option (click)="toggleGrid('editor')">
+    <uni-icon icon="mdi-keyboard"></uni-icon>
+    Editor
+    <uni-icon *ngIf="files[active]?.grid?.editor" class="check-icon" icon="mdi-check"></uni-icon>
+  </uni-option>
+
+  <uni-option (click)="toggleGrid('tree')">
+    <uni-icon icon="mdi-file-tree"></uni-icon>
+    Tree
+    <uni-icon *ngIf="files[active]?.grid?.tree" class="check-icon" icon="mdi-check"></uni-icon>
+  </uni-option>
+
+  <uni-option (click)="toggleGrid('schema')">
+    <uni-icon icon="mdi-code-json"></uni-icon>
+    Schema
+    <uni-icon *ngIf="files[active]?.grid?.schema" class="check-icon" icon="mdi-check"></uni-icon>
+  </uni-option>
+
+  <uni-option (click)="toggleGrid('typescript')">
+    <uni-icon icon="mdi-code-tags"></uni-icon>
+    Typescript
+    <uni-icon *ngIf="files[active]?.grid?.typescript" class="check-icon" icon="mdi-check"></uni-icon>
+  </uni-option>
 </ng-template>

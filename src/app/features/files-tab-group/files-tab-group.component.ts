@@ -47,7 +47,6 @@ export class FilesTabGroupComponent {
   }
   private _active?: string;
 
-  // tabs
   @Output() edit = new EventEmitter<{ e: string; id: string; }>();
   @Output() activate = new EventEmitter<string>();
   @Output() remove = new EventEmitter<string>();
