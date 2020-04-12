@@ -1,5 +1,5 @@
 <luc-titlebar
-  *ngIf="(systemService.isMac$ | async)"
+  *ngIf="(systemService.isMac$ | async) && !(systemService.fullscreen$ | async)"
 ></luc-titlebar>
 
 <ng-container *ngIf="fileService.active$ | async; let active">

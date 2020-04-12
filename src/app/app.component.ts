@@ -27,6 +27,10 @@ export class AppComponent implements OnInit {
       this.systemService.setSystem(system);
     });
 
+    this._electronService.on('fullscreen', (fullscreen: boolean) => {
+      this.systemService.setFullscreen(fullscreen);
+    });
+
     this._electronService.on('file.open', (e: IFile) => {
       this.fileService.set(e.path, e.name, e.text);
     });

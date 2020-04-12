@@ -13,15 +13,21 @@ import * as selectors from './system.selectors';
 export class SystemService {
   readonly state$: Observable<ISystemState>;
   readonly system$: Observable<ISystem | undefined>;
+  readonly fullscreen$: Observable<boolean>;
   readonly isMac$: Observable<boolean>;
 
   constructor(private readonly _store$: Store<ISystemState>) {
     this.state$ = this._store$.pipe(select(selectors.selectState));
     this.system$ = this._store$.pipe(select(selectors.selectSystem));
+    this.fullscreen$ = this._store$.pipe(select(selectors.selectFullscreen));
     this.isMac$ = this._store$.pipe(select(selectors.selectIsMac));
   }
 
   setSystem(system: ISystem) {
     this._store$.dispatch(actions.setSystem({ system }));
+  }
+
+  setFullscreen(fullscreen: boolean) {
+    this._store$.dispatch(actions.setFullscreen({ fullscreen }));
   }
 }

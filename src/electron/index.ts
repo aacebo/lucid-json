@@ -59,6 +59,8 @@ class App {
     electron.ipcMain.on('file.save', this._onSaveFile.bind(this));
 
     this._window.webContents.on('dom-ready', this._onDomReady.bind(this));
+    this._window.on('enter-full-screen', () => this._window.webContents.send('fullscreen', true));
+    this._window.on('leave-full-screen', () => this._window.webContents.send('fullscreen', false));
     this._window.on('closed', () => this._window = null);
   }
 
@@ -103,6 +105,7 @@ class App {
   private _onDomReady() {
     this._window.show();
     this._window.webContents.send('system', getSystem());
+    this._window.webContents.send('fullscreen', this._window.isFullScreen);
 
     if (dev) {
       this._window.webContents.openDevTools();
