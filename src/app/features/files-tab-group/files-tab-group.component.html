@@ -37,7 +37,7 @@
               <uni-scroll>
                 <uni-json-tree
                   [json]="files[id]?.json"
-                  (propertyValueClicked)="onPropertyValueClick($event)"
+                  (propertyValueClick)="onPropertyValueClick($event)"
                 ></uni-json-tree>
               </uni-scroll>
             </uni-split-area>
@@ -49,7 +49,7 @@
               <uni-scroll>
                 <uni-json-tree
                  [json]="files[id]?.schema"
-                 (propertyValueClicked)="onPropertyValueClick($event)"
+                 (propertyValueClick)="onPropertyValueClick($event)"
                 ></uni-json-tree>
               </uni-scroll>
             </uni-split-area>
