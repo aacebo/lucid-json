@@ -5,6 +5,7 @@ import {
   IpcRenderer,
   MenuItemConstructorOptions,
   Remote,
+  MessageBoxOptions,
 } from 'electron';
 
 @Injectable({
@@ -71,5 +72,9 @@ export class ElectronService {
 
   getGlobal<T = any>(prop: string) {
     return this._remote.getGlobal(prop) as T;
+  }
+
+  showMessageDialog(options: MessageBoxOptions) {
+    return this._remote.dialog.showMessageBox(this.window, options);
   }
 }

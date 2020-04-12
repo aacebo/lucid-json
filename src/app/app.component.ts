@@ -36,16 +36,28 @@ export class AppComponent implements OnInit {
     });
   }
 
-  onEdit(e: { e: string; id: string; }) {
-    this.fileService.update(e.id, e.e);
+  onEdit(e: { id: string; text: string; }) {
+    this.fileService.update(e.id, e.text);
   }
 
   onActivate(e: string) {
     this.fileService.activate(e);
   }
 
-  onRemove(e: string) {
-    this.fileService.remove(e);
+  async onRemove(e: { id: string; dirty?: boolean; }) {
+    if (!e.dirty) {
+      this.fileService.remove(e.id);
+    } else {
+      const res = await this._electronService.showMessageDialog({
+        type: 'question',
+        message: 'Are you sure you want to close this file and lose all pending changes?',
+        buttons: ['Ok', 'Cancel'],
+      });
+
+      if (res.response === 0) {
+        this.fileService.remove(e.id);
+      }
+    }
   }
 
   onSave(e: { id: string; path?: string; text: string }) {

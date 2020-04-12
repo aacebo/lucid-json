@@ -40,9 +40,9 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
   private _active?: string;
 
   @Output() activate = new EventEmitter<string>();
-  @Output() remove = new EventEmitter<string>();
   @Output() clipboard = new EventEmitter<string>();
-  @Output() edit = new EventEmitter<{ e: string; id: string; }>();
+  @Output() remove = new EventEmitter<{ id: string; dirty?: boolean; }>();
+  @Output() edit = new EventEmitter<{ id: string; text: string; }>();
   @Output() grid = new EventEmitter<{ id: string; grid: IGrid; }>();
   @Output() save = new EventEmitter<{ id: string; path?: string; text: string; }>();
   @Output() cursorChange = new EventEmitter<CodeMirror.Position>();
@@ -73,7 +73,7 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
   }
 
   onTextChange(e: string) {
-    this.edit.emit({ e, id: this.active });
+    this.edit.emit({ id: this.active, text: e });
   }
 
   onTabChange(e: number) {
@@ -89,7 +89,7 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
       this.activate.emit(this.ids[idx - 1]);
     }
 
-    this.remove.emit(e);
+    this.remove.emit({ id: e, dirty: this.files[e].dirty });
   }
 
   onPropertyValueClick(e: IUniJsonTreeNode) {

@@ -63,7 +63,7 @@ class App {
   }
 
   private async _onOpenFile() {
-    const res = await electron.dialog.showOpenDialog({
+    const res = await electron.dialog.showOpenDialog(this._window, {
       properties: ['openFile'],
       filters: [{ name: 'json', extensions: ['json'] }],
     });
@@ -86,7 +86,7 @@ class App {
       return;
     }
 
-    const res = await electron.dialog.showSaveDialog({
+    const res = await electron.dialog.showSaveDialog(this._window, {
       filters: [{ name: 'json', extensions: ['json'] }],
     });
 
