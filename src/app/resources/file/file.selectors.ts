@@ -14,3 +14,11 @@ export const selectLines = createSelector(selectState, state => {
 
   return 0;
 });
+
+export const selectLength = createSelector(selectState, state => {
+  if (state.files[state.active]) {
+    return state.files[state.active].text.length;
+  }
+
+  return 0;
+});

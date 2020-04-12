@@ -17,10 +17,10 @@
   ></luc-files-tab-group>
 
   <luc-actionbar
-    *ngIf="active"
     [active]="active"
     [cursor]="editorService.cursor$ | async"
     [lines]="fileService.lines$ | async"
+    [length]="fileService.length$ | async"
     (minify)="onFormat($event, false)"
     (beautify)="onFormat($event, true)"
   ></luc-actionbar>

@@ -17,6 +17,7 @@ export class FileService {
   readonly ids$: Observable<string[]>;
   readonly active$: Observable<string | undefined>;
   readonly lines$: Observable<number>;
+  readonly length$: Observable<number>;
 
   constructor(private readonly _store$: Store<IFileState>) {
     this.state$ = this._store$.pipe(select(selectors.selectState));
@@ -24,6 +25,7 @@ export class FileService {
     this.ids$ = this._store$.pipe(select(selectors.selectIds));
     this.active$ = this._store$.pipe(select(selectors.selectActive));
     this.lines$ = this._store$.pipe(select(selectors.selectLines));
+    this.length$ = this._store$.pipe(select(selectors.selectLength));
   }
 
   set(path?: string, name?: string, text?: string) {
