@@ -7,7 +7,9 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { UniFormFieldControlBase, uniFormFieldProvider } from '@uniform/components';
 
 import CodeMirror from 'codemirror';
@@ -45,6 +47,17 @@ import 'codemirror/addon/search/searchcursor.js';
   encapsulation: ViewEncapsulation.None,
 })
 export class JsonEditorComponent extends UniFormFieldControlBase<string> implements OnDestroy {
+  @Input()
+  get focus() { return this._focus; }
+  set focus(v) {
+    this._focus = coerceBooleanProperty(v);
+
+    if (this.editor && this._focus && !this.editor.hasFocus()) {
+      this.editor.focus();
+    }
+  }
+  private _focus?: boolean;
+
   @Output() cursorChange = new EventEmitter<CodeMirror.Position>();
   @Output() save = new EventEmitter<void>();
 
@@ -77,7 +90,14 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
     this.editor.on('change', this.onEditorChange.bind(this));
     this.editor.on('cursorActivity', this.onEditorCursorChange.bind(this));
     this.editor.setValue(this.value || '');
-    setTimeout(() => this.editor.refresh());
+
+    setTimeout(() => {
+      this.editor.refresh();
+
+      if (this._focus && !this.editor.hasFocus()) {
+        this.editor.focus();
+      }
+    });
   }
   private _textarea: ElementRef<HTMLTextAreaElement>;
 
