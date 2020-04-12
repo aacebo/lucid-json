@@ -19,7 +19,6 @@
     "build": "rimraf dist && ng build && npm run build:electron",
     "build:prod": "rimraf dist && ng build --prod && npm run build:electron",
     "build:electron": "tsc -p src/electron",
-    "build:uniform": "ng build uniform",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
