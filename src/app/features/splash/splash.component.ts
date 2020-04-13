@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { UniKeyboard } from '@uniform/components';
 
 @Component({
@@ -7,8 +8,20 @@ import { UniKeyboard } from '@uniform/components';
   styleUrls: ['./splash.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SplashComponent implements OnInit {
-  @Input() mac?: boolean;
+export class SplashComponent {
+  @Input()
+  get mac() { return this._mac; }
+  set mac(v: boolean) {
+    this._mac = coerceBooleanProperty(v);
+
+    this.hotkeys = [
+      { keys: [this._key, 'Alt', 'N'], description: 'New File' },
+      { keys: [this._key, 'Alt', 'O'], description: 'Open File' },
+    ];
+
+    this._cdr.markForCheck();
+  }
+  private _mac?: boolean;
 
   hotkeys: {
     readonly keys: string[];
@@ -19,10 +32,5 @@ export class SplashComponent implements OnInit {
     return this.mac ? UniKeyboard.Command : 'Ctrl';
   }
 
-  ngOnInit() {
-    this.hotkeys = [
-      { keys: [this._key, 'Alt', 'N'], description: 'New File' },
-      { keys: [this._key, 'Alt', 'O'], description: 'Open File' },
-    ];
-  }
+  constructor(private readonly _cdr: ChangeDetectorRef) { }
 }
