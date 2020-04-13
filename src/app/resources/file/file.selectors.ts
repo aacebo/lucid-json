@@ -8,7 +8,7 @@ export const selectIds = createSelector(selectState, state => Object.keys(state.
 export const selectActive = createSelector(selectState, state => state.active);
 
 export const selectLines = createSelector(selectState, state => {
-  if (state.files[state.active]) {
+  if (state.files[state.active] && state.files[state.active].text) {
     return (state.files[state.active].text.match(/\n/g) || []).length + 1;
   }
 
@@ -16,7 +16,7 @@ export const selectLines = createSelector(selectState, state => {
 });
 
 export const selectLength = createSelector(selectState, state => {
-  if (state.files[state.active]) {
+  if (state.files[state.active] && state.files[state.active].text) {
     return state.files[state.active].text.length;
   }
 

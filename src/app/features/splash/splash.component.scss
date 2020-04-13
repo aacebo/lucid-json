@@ -13,6 +13,10 @@
       color: var(--white-a50);
       cursor: default;
 
+      &:not(:last-child) {
+        margin-bottom: 5px;
+      }
+
       .hotkey--key {
         background-color: var(--darkest);
         border-radius: 4px;
