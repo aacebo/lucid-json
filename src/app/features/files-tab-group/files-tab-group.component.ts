@@ -85,8 +85,12 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
   onClose(e: string) {
     const idx = this.ids.indexOf(e);
 
-    if (this.ids.length > 1 && e === this.active && idx > 0) {
-      this.activate.emit(this.ids[idx - 1]);
+    if (this.ids.length > 1 && e === this.active && idx > -1) {
+      if (idx > 0) {
+        this.activate.emit(this.ids[idx - 1]);
+      } else {
+        this.activate.emit(this.ids[idx + 1]);
+      }
     }
 
     this.remove.emit({ id: e, dirty: this.files[e].dirty });
