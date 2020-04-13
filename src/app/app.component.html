@@ -2,7 +2,7 @@
   *ngIf="(systemService.isMac$ | async) && !(systemService.fullscreen$ | async)"
 ></luc-titlebar>
 
-<ng-container *ngIf="fileService.active$ | async; let active">
+<ng-container *ngIf="fileService.active$ | async; else splashTpl; let active">
   <luc-files-tab-group
     [active]="active"
     [ids]="fileService.ids$ | async"
@@ -25,3 +25,7 @@
     (beautify)="onFormat($event, true)"
   ></luc-actionbar>
 </ng-container>
+
+<ng-template #splashTpl>
+  <luc-splash [mac]="systemService.isMac$ | async"></luc-splash>
+</ng-template>

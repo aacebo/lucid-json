@@ -25,10 +25,10 @@ export class AppMenu {
     {
       label: 'File',
       submenu: [
-        { label: 'New', click: () => this.newFile$.next() },
-        { label: 'Open', click: () => this.openFile$.next() },
+        { label: 'New', accelerator: 'CmdOrCtrl+Alt+N', click: () => this.newFile$.next() },
+        { label: 'Open', accelerator: 'CmdOrCtrl+Alt+O', click: () => this.openFile$.next() },
         { type: 'separator' },
-        isMac ? { role: 'close' } : { role: 'quit' },
+        { role: isMac ? 'close' : 'quit' },
       ],
     },
     {

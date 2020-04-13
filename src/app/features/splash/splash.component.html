@@ -1,0 +1,17 @@
+<div class="center">
+  <div
+    class="hotkey"
+    *ngFor="let hotkey of hotkeys"
+  >
+    <div
+      class="hotkey--key"
+      *ngFor="let key of hotkey.keys"
+    >
+      {{ key }}
+    </div>
+
+    <div class="hotkey--description">
+      - {{ hotkey.description }}
+    </div>
+  </div>
+</div>

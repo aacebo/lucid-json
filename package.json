@@ -88,7 +88,7 @@
     "@ngrx/effects": "^9.0.0",
     "@ngrx/store": "^9.0.0",
     "@ngrx/store-devtools": "^9.0.0",
-    "@uniform/components": "^0.0.5-rc.4",
+    "@uniform/components": "^0.0.5-rc.6",
     "ajv": "^6.12.0",
     "codemirror": "^5.52.2",
     "dotenv": "^8.2.0",

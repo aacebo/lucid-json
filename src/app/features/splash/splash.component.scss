@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  flex: 1 1 auto;
+
+  .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .hotkey {
+      display: flex;
+      color: var(--white-a50);
+      cursor: default;
+
+      .hotkey--key {
+        background-color: var(--darkest);
+        border-radius: 4px;
+        padding: 5px;
+        border: 1px solid var(--white-a20);
+        border-bottom: 2px solid var(--white-a20);
+        margin-right: 3px;
+      }
+
+      .hotkey--description {
+        margin: auto;
+      }
+    }
+  }
+}

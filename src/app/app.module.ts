@@ -17,6 +17,7 @@ import { ResourcesModule } from './resources/resources.module';
 import { TitlebarModule } from './features/titlebar';
 import { ActionbarModule } from './features/actionbar';
 import { FilesTabGroupModule } from './features/files-tab-group';
+import { SplashModule } from './features/splash';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +42,7 @@ import { FilesTabGroupModule } from './features/files-tab-group';
     TitlebarModule,
     ActionbarModule,
     FilesTabGroupModule,
+    SplashModule,
   ],
 })
 export class AppModule {
