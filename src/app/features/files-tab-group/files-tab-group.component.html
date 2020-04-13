@@ -56,7 +56,10 @@
             </uni-split-area>
             <uni-split-area *ngIf="files[id]?.grid?.typescript">
               <uni-scroll>
-                <uni-code language="typescript" [code]="files[id]?.typescript"></uni-code>
+                <uni-code
+                  language="typescript"
+                  [code]="files[id]?.typescript"
+                ></uni-code>
               </uni-scroll>
             </uni-split-area>
           </uni-vertical-split>
