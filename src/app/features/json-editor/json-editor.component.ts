@@ -24,8 +24,6 @@ import 'codemirror/addon/fold/foldgutter.js';
 import 'codemirror/addon/lint/lint.js';
 import 'codemirror/addon/hint/show-hint.js';
 
-import 'codemirror/addon/scroll/simplescrollbars.js';
-
 import 'codemirror/addon/selection/active-line.js';
 import 'codemirror/addon/selection/mark-selection.js';
 
@@ -33,7 +31,6 @@ import 'codemirror/addon/dialog/dialog.js';
 
 import 'codemirror/addon/search/jump-to-line.js';
 import 'codemirror/addon/search/match-highlighter.js';
-import 'codemirror/addon/search/matchesonscrollbar.js';
 import 'codemirror/addon/search/search.js';
 import 'codemirror/addon/search/searchcursor.js';
 
@@ -75,7 +72,7 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
       autofocus: true,
       foldGutter: true,
       dragDrop: false,
-      scrollbarStyle: 'overlay',
+      scrollbarStyle: 'null',
       gutters: [
         'CodeMirror-linenumbers',
         'CodeMirror-foldgutter',

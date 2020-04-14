@@ -1,29 +1,12 @@
 .luc-json-editor {
   display: flex;
   flex-direction: column;
-  width: 100%;
   flex: 1;
 
   .CodeMirror {
     height: auto;
     min-height: 100%;
-    width: 100%;
-
-    &:hover {
-      .CodeMirror-overlayscroll-vertical,
-      .CodeMirror-overlayscroll-horizontal {
-        opacity: 1;
-      }
-    }
-
-    .CodeMirror-overlayscroll-vertical,
-    .CodeMirror-overlayscroll-horizontal {
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out;
-    }
-
-    .CodeMirror-scrollbar-filler {
-      background-color: transparent !important;
-    }
+    width: auto;
+    min-width: 100%;
   }
 }
