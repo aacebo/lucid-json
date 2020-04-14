@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { UniFormFieldControlBase, uniFormFieldProvider } from '@uniform/components';
+import { parse } from '@prantlf/jsonlint';
 
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript.js';
@@ -22,6 +23,7 @@ import 'codemirror/addon/fold/brace-fold.js';
 import 'codemirror/addon/fold/foldgutter.js';
 
 import 'codemirror/addon/lint/lint.js';
+import 'codemirror/addon/lint/json-lint.js';
 import 'codemirror/addon/hint/show-hint.js';
 
 import 'codemirror/addon/selection/active-line.js';
@@ -81,12 +83,16 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
       theme: 'icecoder',
       mode: { name: 'javascript', json: true },
       readOnly: false,
-      lint: true,
+      lint: {
+        async: true,
+        getAnnotations: this._getAnnotations.bind(this),
+      },
       tabSize: 2,
       autofocus: true,
       foldGutter: true,
       dragDrop: false,
       scrollbarStyle: 'null',
+      showHint: true,
       gutters: [
         'CodeMirror-linenumbers',
         'CodeMirror-foldgutter',
@@ -98,8 +104,8 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
       styleActiveLine: { nonEmpty: true },
     });
 
-    this._editor.on('change', this.onEditorChange.bind(this));
-    this._editor.on('cursorActivity', this.onEditorCursorChange.bind(this));
+    this._editor.on('change', this._onEditorChange.bind(this));
+    this._editor.on('cursorActivity', this._onEditorCursorChange.bind(this));
     this._editor.setValue(this.value || '');
 
     setTimeout(() => {
@@ -127,12 +133,12 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
 
   ngOnDestroy() {
     if (this._editor) {
-      this._editor.off('change', this.onEditorChange.bind(this));
-      this._editor.off('cursorActivity', this.onEditorCursorChange.bind(this));
+      this._editor.off('change', this._onEditorChange.bind(this));
+      this._editor.off('cursorActivity', this._onEditorCursorChange.bind(this));
     }
   }
 
-  private onEditorChange(editor: CodeMirror.EditorFromTextArea) {
+  private _onEditorChange(editor: CodeMirror.EditorFromTextArea) {
     const v = editor.getValue();
 
     if (v !== this.value) {
@@ -141,7 +147,28 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
     }
   }
 
-  private onEditorCursorChange(editor: CodeMirror.EditorFromTextArea) {
+  private _onEditorCursorChange(editor: CodeMirror.EditorFromTextArea) {
     this.cursorChange.emit(editor.getCursor());
+  }
+
+  private _getAnnotations(
+    text: string,
+    update: CodeMirror.UpdateLintingCallback,
+    _options: CodeMirror.LintStateOptions,
+    editor: CodeMirror.EditorFromTextArea,
+  ) {
+    let errors: CodeMirror.Annotation[] = [];
+
+    try {
+      parse(text);
+    } catch (err) {
+      errors = [{
+        from: { line: err.location.start.line, ch: err.location.start.column },
+        to: { line: err.location.start.line, ch: err.location.start.column },
+        message: err.message,
+      }];
+    }
+
+    update(editor, errors);
   }
 }

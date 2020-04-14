@@ -12,6 +12,8 @@ interface NodeModule {
 declare var module: NodeModule;
 declare var require: NodeRequire;
 
+declare module '@prantlf/jsonlint/lib/validator';
+declare module '@prantlf/jsonlint/lib/printer';
 declare module 'to-json-schema';
 declare module '*.json' {
   const value: any;
