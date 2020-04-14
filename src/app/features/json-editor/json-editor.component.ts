@@ -45,12 +45,25 @@ import 'codemirror/addon/search/searchcursor.js';
 })
 export class JsonEditorComponent extends UniFormFieldControlBase<string> implements OnDestroy {
   @Input()
+  get options() { return this._options; }
+  set options(v) {
+    this._options = v;
+
+    if (v && this._editor) {
+      for (const key of Object.getOwnPropertyNames(v)) {
+        this._editor.setOption(key as keyof CodeMirror.EditorConfiguration, v[key]);
+      }
+    }
+  }
+  private _options: CodeMirror.EditorConfiguration = { };
+
+  @Input()
   get focus() { return this._focus; }
   set focus(v) {
     this._focus = coerceBooleanProperty(v);
 
-    if (this.editor && this._focus && !this.editor.hasFocus()) {
-      this.editor.focus();
+    if (this._editor && this._focus && !this._editor.hasFocus()) {
+      this._editor.focus();
     }
   }
   private _focus?: boolean;
@@ -62,7 +75,8 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
   get textarea() { return this._textarea; }
   set textarea(v) {
     this._textarea = v;
-    this.editor = CodeMirror.fromTextArea(this.textarea.nativeElement, {
+    this._editor = CodeMirror.fromTextArea(this.textarea.nativeElement, {
+      ...this.options,
       lineNumbers: true,
       theme: 'icecoder',
       mode: { name: 'javascript', json: true },
@@ -84,15 +98,15 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
       styleActiveLine: { nonEmpty: true },
     });
 
-    this.editor.on('change', this.onEditorChange.bind(this));
-    this.editor.on('cursorActivity', this.onEditorCursorChange.bind(this));
-    this.editor.setValue(this.value || '');
+    this._editor.on('change', this.onEditorChange.bind(this));
+    this._editor.on('cursorActivity', this.onEditorCursorChange.bind(this));
+    this._editor.setValue(this.value || '');
 
     setTimeout(() => {
-      this.editor.refresh();
+      this._editor.refresh();
 
-      if (this._focus && !this.editor.hasFocus()) {
-        this.editor.focus();
+      if (this._focus && !this._editor.hasFocus()) {
+        this._editor.focus();
       }
     });
   }
@@ -102,19 +116,19 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
   set value(v) {
     this._value = v;
 
-    if (this.editor && v && v !== this.editor.getValue()) {
-      this.editor.setValue(v);
+    if (this._editor && v && v !== this._editor.getValue()) {
+      this._editor.setValue(v);
       this.cdr.markForCheck();
     }
   }
   protected _value?: string;
 
-  editor: CodeMirror.EditorFromTextArea;
+  private _editor: CodeMirror.EditorFromTextArea;
 
   ngOnDestroy() {
-    if (this.editor) {
-      this.editor.off('change', this.onEditorChange.bind(this));
-      this.editor.off('cursorActivity', this.onEditorCursorChange.bind(this));
+    if (this._editor) {
+      this._editor.off('change', this.onEditorChange.bind(this));
+      this._editor.off('cursorActivity', this.onEditorCursorChange.bind(this));
     }
   }
 
