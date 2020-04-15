@@ -54,9 +54,9 @@
             "styles": [
               "src/styles.scss",
               "node_modules/@mdi/font/css/materialdesignicons.min.css",
-              "node_modules/highlight.js/styles/vs2015.css",
+              "node_modules/highlight.js/styles/monokai.css",
               "node_modules/codemirror/lib/codemirror.css",
-              "node_modules/codemirror/theme/icecoder.css",
+              "node_modules/codemirror/theme/yonce.css",
               "node_modules/codemirror/addon/fold/foldgutter.css",
               "node_modules/codemirror/addon/lint/lint.css",
               "node_modules/codemirror/addon/dialog/dialog.css"

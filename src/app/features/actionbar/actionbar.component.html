@@ -1,23 +1,13 @@
 <div class="left">
-  <div class="luc-actionbar--item">
-    <uni-icon
-      icon="mdi-close-circle-outline"
-      [uniBadge]="errors"
-      [uniBadgeDisabled]="errors === 0"
-      uniBadgeSize="sm"
-      uniBadgePosition="top right"
-      uniBadgeColor="danger"
-    ></uni-icon>
-  </div>
-
   <div
     class="luc-actionbar--item clickeable"
     (click)="minify.emit(active)"
   >
     <uni-icon
       icon="mdi-format-align-justify"
-      uniTooltip="Minify"
-      uniTooltipPosition="top"
+      uniPopover="Minify"
+      uniPopoverPosition="top right"
+      uniPopoverTrigger="hover"
     ></uni-icon>
   </div>
 
@@ -27,8 +17,9 @@
   >
     <uni-icon
       icon="mdi-format-align-right"
-      uniTooltip="Beautify"
-      uniTooltipPosition="top"
+      uniPopover="Beautify"
+      uniPopoverPosition="top"
+      uniPopoverTrigger="hover"
     ></uni-icon>
   </div>
 </div>

@@ -10,7 +10,6 @@ import CodeMirror from 'codemirror';
 export class ActionbarComponent {
   @Input() active?: string;
   @Input() cursor?: CodeMirror.Position;
-  @Input() errors = 5;
   @Input() lines = 0;
   @Input() length = 0;
 

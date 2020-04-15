@@ -1,7 +1,8 @@
 .luc-json-editor {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  min-height: 100%;
+  height: auto;
 
   .CodeMirror {
     height: auto;

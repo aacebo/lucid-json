@@ -80,8 +80,8 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
     this._editor = CodeMirror.fromTextArea(this.textarea.nativeElement, {
       ...this.options,
       lineNumbers: true,
-      theme: 'icecoder',
-      mode: { name: 'javascript', json: true },
+      theme: 'yonce',
+      mode: { name: 'javascript', json: false },
       readOnly: false,
       lint: {
         async: true,
@@ -160,12 +160,14 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
     let errors: CodeMirror.Annotation[] = [];
 
     try {
-      parse(text);
+      if (text && text.length) {
+        parse(text);
+      }
     } catch (err) {
       errors = [{
         from: { line: err.location.start.line, ch: err.location.start.column },
         to: { line: err.location.start.line, ch: err.location.start.column },
-        message: err.message,
+        message: err.reason,
       }];
     }
 
