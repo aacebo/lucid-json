@@ -71,10 +71,13 @@ class App {
     });
 
     if (res.filePath) {
-      this._window.webContents.send('file.export', {
-        path: res.filePath,
-        ext: path.extname(res.filePath).split('.').pop(),
+      electron.ipcMain.once('file.export.return', async (_, e: string) => {
+        if (e) {
+          await File.write(res.filePath, e);
+        }
       });
+
+      this._window.webContents.send('file.export', path.extname(res.filePath).split('.').pop());
     }
   }
 

@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { UniToastService, UniToastType, UniToastPosition } from '@uniform/components';
 import { take } from 'rxjs/operators';
+import { parse } from 'json2csv';
 import CodeMirror from 'codemirror';
 
 import { ElectronService } from './core/services/electron';
@@ -46,9 +47,12 @@ export class AppComponent implements OnInit {
       this.fileService.set();
     });
 
-    this._electronService.on('file.export', async (e: { path: string; ext: 'csv' | 'ts' | 'yml'; }) => {
+    this._electronService.on('file.export', async (e: 'csv' | 'ts' | 'yml') => {
       const file = await this.fileService.activeFile$.pipe(take(1)).toPromise();
-      console.log(file[e.ext]);
+
+      if (file && file.json) {
+        this._electronService.send('file.export.return', e === 'csv' ? parse(file.json) : file[e]);
+      }
     });
   }
 
