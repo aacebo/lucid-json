@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { UniToastService, UniToastType, UniToastPosition } from '@uniform/components';
+import { take } from 'rxjs/operators';
 import CodeMirror from 'codemirror';
 
 import { ElectronService } from './core/services/electron';
@@ -31,12 +32,22 @@ export class AppComponent implements OnInit {
       this.systemService.setFullscreen(fullscreen);
     });
 
-    this._electronService.on('file.open', (e: IFile) => {
-      this.fileService.set(e.path, e.name, e.text);
+    this._electronService.on('file.open', async (e: IFile) => {
+      const paths = await this.fileService.paths$.pipe(take(1)).toPromise();
+
+      if (!paths[e.path]) {
+        this.fileService.set(e.path, e.name, e.text);
+      } else {
+        this.fileService.activate(paths[e.path]);
+      }
     });
 
     this._electronService.on('file.new', () => {
       this.fileService.set();
+    });
+
+    this._electronService.on('file.export', async (e: { path: string; ext: string; }) => {
+      console.log(e);
     });
   }
 

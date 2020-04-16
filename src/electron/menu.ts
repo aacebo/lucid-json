@@ -6,6 +6,7 @@ const isMac = process.platform === 'darwin';
 export class AppMenu {
   readonly newFile$ = new Subject<void>();
   readonly openFile$ = new Subject<void>();
+  readonly exportFile$ = new Subject<void>();
 
   private readonly _menu: (MenuItemConstructorOptions | MenuItem)[] = [
     ...(isMac ? [{
@@ -27,6 +28,7 @@ export class AppMenu {
       submenu: [
         { label: 'New', accelerator: 'CmdOrCtrl+Alt+N', click: () => this.newFile$.next() },
         { label: 'Open', accelerator: 'CmdOrCtrl+Alt+O', click: () => this.openFile$.next() },
+        { label: 'Export', accelerator: 'CmdOrCtrl+Alt+E', click: () => this.exportFile$.next() },
         { type: 'separator' },
         { role: isMac ? 'close' : 'quit' },
       ],

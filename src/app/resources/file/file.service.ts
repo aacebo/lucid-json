@@ -14,6 +14,7 @@ import * as actions from './actions';
 export class FileService {
   readonly state$: Observable<IFileState>;
   readonly files$: Observable<{ [id: string]: IFile }>;
+  readonly paths$: Observable<{ [path: string]: string }>;
   readonly ids$: Observable<string[]>;
   readonly active$: Observable<string | undefined>;
   readonly lines$: Observable<number>;
@@ -22,6 +23,7 @@ export class FileService {
   constructor(private readonly _store$: Store<IFileState>) {
     this.state$ = this._store$.pipe(select(selectors.selectState));
     this.files$ = this._store$.pipe(select(selectors.selectFiles));
+    this.paths$ = this._store$.pipe(select(selectors.selectPaths));
     this.ids$ = this._store$.pipe(select(selectors.selectIds));
     this.active$ = this._store$.pipe(select(selectors.selectActive));
     this.lines$ = this._store$.pipe(select(selectors.selectLines));

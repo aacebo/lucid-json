@@ -55,6 +55,7 @@ class App {
 
     this._menu.openFile$.subscribe(this._onOpenFile.bind(this));
     this._menu.newFile$.subscribe(() => this._window.webContents.send('file.new'));
+    this._menu.exportFile$.subscribe(this._onExportFile.bind(this));
 
     electron.ipcMain.on('file.save', this._onSaveFile.bind(this));
 
@@ -62,6 +63,19 @@ class App {
     this._window.on('enter-full-screen', () => this._window.webContents.send('fullscreen', true));
     this._window.on('leave-full-screen', () => this._window.webContents.send('fullscreen', false));
     this._window.on('closed', () => this._window = null);
+  }
+
+  private async _onExportFile() {
+    const res = await electron.dialog.showSaveDialog({
+      filters: [{ name: 'Formats', extensions: ['csv', 'ts', 'yaml'] }],
+    });
+
+    if (res.filePath) {
+      this._window.webContents.send('file.export', {
+        path: res.filePath,
+        ext: path.extname(res.filePath).split('.').pop(),
+      });
+    }
   }
 
   private async _onOpenFile() {
