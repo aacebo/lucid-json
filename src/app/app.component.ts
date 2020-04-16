@@ -64,19 +64,23 @@ export class AppComponent implements OnInit {
     this.fileService.activate(e);
   }
 
-  async onRemove(e: { id: string; dirty?: boolean; }) {
-    if (!e.dirty) {
-      this.fileService.remove(e.id);
-    } else {
+  async onRemove(e: { id: string; nextId?: string; dirty?: boolean; }) {
+    if (e.dirty) {
       const res = await this._electronService.showMessageDialog({
         type: 'question',
         message: 'Are you sure you want to close this file and lose all pending changes?',
         buttons: ['Ok', 'Cancel'],
       });
 
-      if (res.response === 0) {
-        this.fileService.remove(e.id);
+      if (res.response !== 0) {
+        return;
       }
+    }
+
+    this.fileService.remove(e.id);
+
+    if (e.nextId) {
+      this.fileService.activate(e.nextId);
     }
   }
 

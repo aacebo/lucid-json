@@ -3,6 +3,7 @@
     <ng-template uniTabLabel>
       <div
         class="uni-ellipsis tab-label"
+        [title]="files[id]?.path"
         [class.new]="!files[id]?.path"
       >
         {{ files[id]?.name || 'New File' }}
