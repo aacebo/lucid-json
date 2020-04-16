@@ -30,6 +30,7 @@ export const files = createReducer<{ [path: string]: IFile }>(
     _[a.id].typescript = a.typescript;
     _[a.id].json = a.json;
     _[a.id].schema = a.schema;
+    _[a.id].yaml = a.yaml;
   }),
   mutableOn(actions.save, (_, a) => {
     if (a.saveAs) {

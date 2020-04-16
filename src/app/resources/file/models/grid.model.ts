@@ -3,4 +3,5 @@ export interface IGrid {
   tree?: boolean;
   schema?: boolean;
   typescript?: boolean;
+  yaml?: boolean;
 }

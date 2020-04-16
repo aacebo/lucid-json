@@ -23,50 +23,62 @@
     </ng-template>
 
     <ng-template uniTabBody>
-      <uni-horizontal-split flex="0 0 75%" [uniContextMenu]="ctxMenuTpl">
-        <uni-split-area *ngIf="files[id]?.grid?.editor || files[id]?.grid?.tree">
-          <uni-vertical-split flex="0 0 75%">
-            <uni-split-area *ngIf="files[id]?.grid?.editor">
-              <uni-scroll>
-                <luc-json-editor
-                  focus
-                  [ngModel]="files[id]?.text"
-                  (ngModelChange)="onTextChange($event)"
-                  (cursorChange)="cursorChange.emit($event)"
-                ></luc-json-editor>
-              </uni-scroll>
+      <uni-vertical-split flex="0 0 75%" [uniContextMenu]="ctxMenuTpl">
+        <uni-split-area *ngIf="files[id]?.grid?.editor || files[id]?.grid?.tree || files[id]?.grid?.schema || files[id]?.grid?.typescript">
+          <uni-horizontal-split flex="0 0 75%">
+            <uni-split-area *ngIf="files[id]?.grid?.editor || files[id]?.grid?.tree">
+              <uni-vertical-split flex="0 0 75%">
+                <uni-split-area *ngIf="files[id]?.grid?.editor">
+                  <uni-scroll>
+                    <luc-json-editor
+                      focus
+                      [ngModel]="files[id]?.text"
+                      (ngModelChange)="onTextChange($event)"
+                      (cursorChange)="cursorChange.emit($event)"
+                    ></luc-json-editor>
+                  </uni-scroll>
+                </uni-split-area>
+                <uni-split-area *ngIf="files[id]?.grid?.tree">
+                  <uni-scroll>
+                    <uni-json-tree
+                      [json]="files[id]?.json"
+                      (propertyValueClick)="onPropertyValueClick($event)"
+                    ></uni-json-tree>
+                  </uni-scroll>
+                </uni-split-area>
+              </uni-vertical-split>
             </uni-split-area>
-            <uni-split-area *ngIf="files[id]?.grid?.tree">
-              <uni-scroll>
-                <uni-json-tree
-                  [json]="files[id]?.json"
-                  (propertyValueClick)="onPropertyValueClick($event)"
-                ></uni-json-tree>
-              </uni-scroll>
+            <uni-split-area *ngIf="files[id]?.grid?.schema || files[id]?.grid?.typescript">
+              <uni-vertical-split>
+                <uni-split-area *ngIf="files[id]?.grid?.schema">
+                  <uni-scroll>
+                    <uni-json-tree
+                     [json]="files[id]?.schema"
+                     (propertyValueClick)="onPropertyValueClick($event)"
+                    ></uni-json-tree>
+                  </uni-scroll>
+                </uni-split-area>
+                <uni-split-area *ngIf="files[id]?.grid?.typescript">
+                  <uni-scroll>
+                    <uni-code
+                      language="typescript"
+                      [code]="files[id]?.typescript"
+                    ></uni-code>
+                  </uni-scroll>
+                </uni-split-area>
+              </uni-vertical-split>
             </uni-split-area>
-          </uni-vertical-split>
+          </uni-horizontal-split>
         </uni-split-area>
-        <uni-split-area *ngIf="files[id]?.grid?.schema || files[id]?.grid?.typescript">
-          <uni-vertical-split>
-            <uni-split-area *ngIf="files[id]?.grid?.schema">
-              <uni-scroll>
-                <uni-json-tree
-                 [json]="files[id]?.schema"
-                 (propertyValueClick)="onPropertyValueClick($event)"
-                ></uni-json-tree>
-              </uni-scroll>
-            </uni-split-area>
-            <uni-split-area *ngIf="files[id]?.grid?.typescript">
-              <uni-scroll>
-                <uni-code
-                  language="typescript"
-                  [code]="files[id]?.typescript"
-                ></uni-code>
-              </uni-scroll>
-            </uni-split-area>
-          </uni-vertical-split>
+        <uni-split-area *ngIf="files[id]?.grid?.yaml">
+          <uni-scroll>
+            <uni-code
+              language="yaml"
+              [code]="files[id]?.yaml"
+            ></uni-code>
+          </uni-scroll>
         </uni-split-area>
-      </uni-horizontal-split>
+      </uni-vertical-split>
     </ng-template>
   </uni-tab>
 </uni-tab-group>
@@ -94,5 +106,11 @@
     <uni-icon icon="mdi-code-tags"></uni-icon>
     Typescript
     <uni-icon *ngIf="files[active]?.grid?.typescript" class="check-icon" icon="mdi-check"></uni-icon>
+  </uni-option>
+
+  <uni-option (click)="toggleGrid('yaml')">
+    <uni-icon icon="mdi-format-align-right"></uni-icon>
+    YAML
+    <uni-icon *ngIf="files[active]?.grid?.yaml" class="check-icon" icon="mdi-check"></uni-icon>
   </uni-option>
 </ng-template>

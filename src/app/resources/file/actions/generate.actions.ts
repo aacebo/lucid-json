@@ -7,5 +7,6 @@ export const generate = createAction(
     readonly typescript?: string;
     readonly json?: any;
     readonly schema?: any;
+    readonly yaml?: string;
   }>(),
 );
