@@ -17,6 +17,7 @@ export class FileService {
   readonly paths$: Observable<{ [path: string]: string }>;
   readonly ids$: Observable<string[]>;
   readonly active$: Observable<string | undefined>;
+  readonly activeFile$: Observable<IFile | undefined>;
   readonly lines$: Observable<number>;
   readonly length$: Observable<number>;
 
@@ -26,6 +27,7 @@ export class FileService {
     this.paths$ = this._store$.pipe(select(selectors.selectPaths));
     this.ids$ = this._store$.pipe(select(selectors.selectIds));
     this.active$ = this._store$.pipe(select(selectors.selectActive));
+    this.activeFile$ = this._store$.pipe(select(selectors.selectActiveFile));
     this.lines$ = this._store$.pipe(select(selectors.selectLines));
     this.length$ = this._store$.pipe(select(selectors.selectLength));
   }

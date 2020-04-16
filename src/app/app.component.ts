@@ -46,8 +46,9 @@ export class AppComponent implements OnInit {
       this.fileService.set();
     });
 
-    this._electronService.on('file.export', async (e: { path: string; ext: string; }) => {
-      console.log(e);
+    this._electronService.on('file.export', async (e: { path: string; ext: 'csv' | 'ts' | 'yml'; }) => {
+      const file = await this.fileService.activeFile$.pipe(take(1)).toPromise();
+      console.log(file[e.ext]);
     });
   }
 

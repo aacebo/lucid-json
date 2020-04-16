@@ -8,7 +8,7 @@ export interface IFile {
   text: string;
   json?: any;
   schema?: any;
-  typescript?: string;
-  yaml?: string;
+  ts?: string;
+  yml?: string;
   dirty?: boolean;
 }

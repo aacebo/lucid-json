@@ -24,7 +24,7 @@
 
     <ng-template uniTabBody>
       <uni-vertical-split flex="0 0 75%" [uniContextMenu]="ctxMenuTpl">
-        <uni-split-area *ngIf="files[id]?.grid?.editor || files[id]?.grid?.tree || files[id]?.grid?.schema || files[id]?.grid?.typescript">
+        <uni-split-area *ngIf="files[id]?.grid?.editor || files[id]?.grid?.tree || files[id]?.grid?.schema || files[id]?.grid?.ts">
           <uni-horizontal-split flex="0 0 75%">
             <uni-split-area *ngIf="files[id]?.grid?.editor || files[id]?.grid?.tree">
               <uni-vertical-split flex="0 0 75%">
@@ -48,7 +48,7 @@
                 </uni-split-area>
               </uni-vertical-split>
             </uni-split-area>
-            <uni-split-area *ngIf="files[id]?.grid?.schema || files[id]?.grid?.typescript">
+            <uni-split-area *ngIf="files[id]?.grid?.schema || files[id]?.grid?.ts">
               <uni-vertical-split>
                 <uni-split-area *ngIf="files[id]?.grid?.schema">
                   <uni-scroll>
@@ -58,11 +58,11 @@
                     ></uni-json-tree>
                   </uni-scroll>
                 </uni-split-area>
-                <uni-split-area *ngIf="files[id]?.grid?.typescript">
+                <uni-split-area *ngIf="files[id]?.grid?.ts">
                   <uni-scroll>
                     <uni-code
                       language="typescript"
-                      [code]="files[id]?.typescript"
+                      [code]="files[id]?.ts"
                     ></uni-code>
                   </uni-scroll>
                 </uni-split-area>
@@ -70,11 +70,11 @@
             </uni-split-area>
           </uni-horizontal-split>
         </uni-split-area>
-        <uni-split-area *ngIf="files[id]?.grid?.yaml">
+        <uni-split-area *ngIf="files[id]?.grid?.yml">
           <uni-scroll>
             <uni-code
               language="yaml"
-              [code]="files[id]?.yaml"
+              [code]="files[id]?.yml"
             ></uni-code>
           </uni-scroll>
         </uni-split-area>
@@ -102,15 +102,15 @@
     <uni-icon *ngIf="files[active]?.grid?.schema" class="check-icon" icon="mdi-check"></uni-icon>
   </uni-option>
 
-  <uni-option (click)="toggleGrid('typescript')">
+  <uni-option (click)="toggleGrid('ts')">
     <uni-icon icon="mdi-code-tags"></uni-icon>
     Typescript
-    <uni-icon *ngIf="files[active]?.grid?.typescript" class="check-icon" icon="mdi-check"></uni-icon>
+    <uni-icon *ngIf="files[active]?.grid?.ts" class="check-icon" icon="mdi-check"></uni-icon>
   </uni-option>
 
-  <uni-option (click)="toggleGrid('yaml')">
+  <uni-option (click)="toggleGrid('yml')">
     <uni-icon icon="mdi-format-align-right"></uni-icon>
     YAML
-    <uni-icon *ngIf="files[active]?.grid?.yaml" class="check-icon" icon="mdi-check"></uni-icon>
+    <uni-icon *ngIf="files[active]?.grid?.yml" class="check-icon" icon="mdi-check"></uni-icon>
   </uni-option>
 </ng-template>

@@ -17,14 +17,14 @@ export class FileEffects {
       const json = tryParseJSON(a.text);
       const schema = json ? toJsonSchema(json) : undefined;
       const ts = json ? jsonToTs(json) : undefined;
-      const yaml = json ? yamljs.safeDump(json) : undefined;
+      const yml = json ? yamljs.safeDump(json) : undefined;
 
       return actions.generate({
         id: a.id,
         json,
         schema,
-        typescript: ts ? ts.join('\n\n') : undefined,
-        yaml,
+        ts: ts ? ts.join('\n\n') : undefined,
+        yml,
       });
     }),
   ));

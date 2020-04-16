@@ -4,9 +4,9 @@ export const generate = createAction(
   '[FILE] Generate',
   props<{
     readonly id: string;
-    readonly typescript?: string;
+    readonly ts?: string;
     readonly json?: any;
     readonly schema?: any;
-    readonly yaml?: string;
+    readonly yml?: string;
   }>(),
 );

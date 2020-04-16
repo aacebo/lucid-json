@@ -67,7 +67,7 @@ class App {
 
   private async _onExportFile() {
     const res = await electron.dialog.showSaveDialog({
-      filters: [{ name: 'Formats', extensions: ['csv', 'ts', 'yaml'] }],
+      filters: [{ name: 'Formats', extensions: ['csv', 'ts', 'yml'] }],
     });
 
     if (res.filePath) {

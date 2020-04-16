@@ -6,6 +6,7 @@ export const selectState = createFeatureSelector<IFileState>('file');
 export const selectFiles = createSelector(selectState, state => state.files);
 export const selectIds = createSelector(selectState, state => Object.keys(state.files));
 export const selectActive = createSelector(selectState, state => state.active);
+export const selectActiveFile = createSelector(selectState, state => state.files[state.active]);
 
 export const selectPaths = createSelector(selectState, state => {
   const paths: { [path: string]: string } = { };

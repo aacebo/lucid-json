@@ -27,10 +27,10 @@ export const files = createReducer<{ [path: string]: IFile }>(
     _[a.id].grid = a.grid;
   }),
   mutableOn(actions.generate, (_, a) => {
-    _[a.id].typescript = a.typescript;
+    _[a.id].ts = a.ts;
     _[a.id].json = a.json;
     _[a.id].schema = a.schema;
-    _[a.id].yaml = a.yaml;
+    _[a.id].yml = a.yml;
   }),
   mutableOn(actions.save, (_, a) => {
     if (a.saveAs) {
