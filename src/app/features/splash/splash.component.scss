@@ -24,10 +24,12 @@
         border: 1px solid var(--white-a20);
         border-bottom: 3px solid var(--white-a20);
         margin-right: 3px;
+        min-width: 15px;
+        text-align: center;
       }
 
       .hotkey--description {
-        margin: auto;
+        margin: auto 5px;
       }
     }
   }

@@ -17,6 +17,8 @@ export class SplashComponent {
     this.hotkeys = [
       { keys: [this._key, 'Alt', 'N'], description: 'New File' },
       { keys: [this._key, 'Alt', 'O'], description: 'Open File' },
+      { keys: [this._key, 'Alt', 'E'], description: 'Export File' },
+      { keys: [this._key, 'Alt', 'I'], description: 'Import File' },
     ];
 
     this._cdr.markForCheck();
