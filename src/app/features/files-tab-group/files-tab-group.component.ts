@@ -82,11 +82,14 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
     }
   }
 
-  onClose(e: string) {
-    const idx = this.ids.indexOf(e);
+  onClose(e: Event, id: string) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+
+    const idx = this.ids.indexOf(id);
     let nextId: string;
 
-    if (this.ids.length > 1 && e === this.active && idx > -1) {
+    if (this.ids.length > 1 && id === this.active && idx > -1) {
       if (idx > 0) {
         nextId = this.ids[idx - 1];
       } else {
@@ -95,9 +98,9 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
     }
 
     this.remove.emit({
-      id: e,
+      id,
       nextId,
-      dirty: this.files[e].dirty,
+      dirty: this.files[id].dirty,
     });
   }
 

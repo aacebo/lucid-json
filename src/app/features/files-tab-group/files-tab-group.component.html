@@ -13,7 +13,7 @@
         class="close-icon"
         icon="mdi-close"
         [class.active]="id === active"
-        (click)="onClose(id)"
+        (click)="onClose($event, id)"
       ></uni-icon>
 
       <uni-icon
