@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import CodeMirror from 'codemirror';
+import { IPosition } from 'monaco-editor';
 
 @Component({
   selector: 'luc-actionbar',
@@ -9,7 +9,7 @@ import CodeMirror from 'codemirror';
 })
 export class ActionbarComponent {
   @Input() active?: string;
-  @Input() cursor?: CodeMirror.Position;
+  @Input() cursor?: IPosition;
   @Input() lines = 0;
   @Input() length = 0;
 

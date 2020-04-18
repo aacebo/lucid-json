@@ -1,176 +1,116 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  ElementRef,
-  ViewChild,
   ViewEncapsulation,
-  OnDestroy,
   Output,
   EventEmitter,
   Input,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
 } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { UniFormFieldControlBase, uniFormFieldProvider } from '@uniform/components';
-import { parse } from '@prantlf/jsonlint';
-
-import CodeMirror from 'codemirror';
-import 'codemirror/mode/javascript/javascript.js';
-
-import 'codemirror/addon/edit/closebrackets.js';
-import 'codemirror/addon/edit/matchbrackets.js';
-
-import 'codemirror/addon/fold/brace-fold.js';
-import 'codemirror/addon/fold/foldgutter.js';
-
-import 'codemirror/addon/lint/lint.js';
-import 'codemirror/addon/lint/json-lint.js';
-import 'codemirror/addon/hint/show-hint.js';
-
-import 'codemirror/addon/selection/active-line.js';
-import 'codemirror/addon/selection/mark-selection.js';
-
-import 'codemirror/addon/dialog/dialog.js';
-
-import 'codemirror/addon/search/jump-to-line.js';
-import 'codemirror/addon/search/match-highlighter.js';
-import 'codemirror/addon/search/search.js';
-import 'codemirror/addon/search/searchcursor.js';
+import { editor, IPosition } from 'monaco-editor';
 
 @Component({
   selector: 'luc-json-editor',
-  template: `<textarea #textarea></textarea>`,
+  template: ``,
   styleUrls: ['./json-editor.component.scss'],
   host: { class: 'luc-json-editor' },
   providers: [uniFormFieldProvider(JsonEditorComponent)],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class JsonEditorComponent extends UniFormFieldControlBase<string> implements OnDestroy {
+export class JsonEditorComponent extends UniFormFieldControlBase<string> implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   get options() { return this._options; }
   set options(v) {
     this._options = v;
 
-    if (v && this._editor) {
-      for (const key of Object.getOwnPropertyNames(v)) {
-        this._editor.setOption(key as keyof CodeMirror.EditorConfiguration, v[key]);
-      }
+    if (this._editor) {
+      this._editor.updateOptions(this._options);
     }
   }
-  private _options: CodeMirror.EditorConfiguration = { };
+  private _options: editor.IStandaloneEditorConstructionOptions = {
+    theme: 'vs-dark',
+    contextmenu: false,
+    tabSize: 2,
+    detectIndentation: false,
+    insertSpaces: true,
+    scrollBeyondLastLine: false,
+  };
 
   @Input()
   get focus() { return this._focus; }
   set focus(v) {
     this._focus = coerceBooleanProperty(v);
 
-    if (this._editor && this._focus && !this._editor.hasFocus()) {
+    if (this._editor && this._focus && !this._editor.hasTextFocus()) {
       this._editor.focus();
     }
   }
   private _focus?: boolean;
 
-  @Output() cursorChange = new EventEmitter<CodeMirror.Position>();
+  @Output() cursorChange = new EventEmitter<IPosition>();
   @Output() save = new EventEmitter<void>();
-
-  @ViewChild('textarea')
-  get textarea() { return this._textarea; }
-  set textarea(v) {
-    this._textarea = v;
-    this._editor = CodeMirror.fromTextArea(this.textarea.nativeElement, {
-      ...this.options,
-      lineNumbers: true,
-      theme: 'yonce',
-      mode: { name: 'javascript', json: false },
-      readOnly: false,
-      lint: {
-        async: true,
-        getAnnotations: this._getAnnotations.bind(this),
-      },
-      tabSize: 2,
-      autofocus: true,
-      foldGutter: true,
-      dragDrop: false,
-      scrollbarStyle: 'null',
-      showHint: true,
-      gutters: [
-        'CodeMirror-linenumbers',
-        'CodeMirror-foldgutter',
-        'CodeMirror-lint-markers',
-      ],
-      viewportMargin: Infinity,
-      autoCloseBrackets: true,
-      matchBrackets: true,
-      styleActiveLine: { nonEmpty: true },
-    });
-
-    this._editor.on('change', this._onEditorChange.bind(this));
-    this._editor.on('cursorActivity', this._onEditorCursorChange.bind(this));
-    this._editor.setValue(this.value || '');
-
-    setTimeout(() => {
-      this._editor.refresh();
-
-      if (this._focus && !this._editor.hasFocus()) {
-        this._editor.focus();
-      }
-    });
-  }
-  private _textarea: ElementRef<HTMLTextAreaElement>;
 
   get value() { return this._value; }
   set value(v) {
     this._value = v;
+    this.onChange(v);
 
-    if (this._editor && v && v !== this._editor.getValue()) {
-      this._editor.setValue(v);
-      this.cdr.markForCheck();
+    if (v !== this._editor.getValue()) {
+      this._editor.setValue(v || '');
     }
   }
   protected _value?: string;
 
-  private _editor: CodeMirror.EditorFromTextArea;
+  get editor() { return this._editor; }
+  private _editor: editor.IStandaloneCodeEditor;
 
-  ngOnDestroy() {
-    if (this._editor) {
-      this._editor.off('change', this._onEditorChange.bind(this));
-      this._editor.off('cursorActivity', this._onEditorCursorChange.bind(this));
-    }
+  get model() { return this._model; }
+  private _model: editor.ITextModel;
+
+  ngOnInit() {
+    super.ngOnInit();
+    this._model = monaco.editor.createModel(this.value || '', 'json');
+    this._editor = monaco.editor.create(this.el.nativeElement, {
+      ...this._options,
+      model: this._model,
+    });
+
+    this._model.updateOptions({
+      tabSize: this._options.tabSize,
+      insertSpaces: this._options.insertSpaces,
+    });
+
+    this._editor.onDidChangeCursorPosition(this._onCursorPositionChange.bind(this));
+    this._editor.onDidChangeModelContent(this._onEditorChange.bind(this));
   }
 
-  private _onEditorChange(editor: CodeMirror.EditorFromTextArea) {
-    const v = editor.getValue();
+  ngAfterViewInit() {
+    this._editor.focus();
+    setTimeout(() => this._editor.layout());
+  }
+
+  ngOnDestroy() {
+    this._editor.dispose();
+    this._model.dispose();
+  }
+
+  private _onEditorChange(_: editor.IModelContentChangedEvent) {
+    const v = this._editor.getValue();
 
     if (v !== this.value) {
       this.value = v;
-      this.onChange(v);
     }
   }
 
-  private _onEditorCursorChange(editor: CodeMirror.EditorFromTextArea) {
-    this.cursorChange.emit(editor.getCursor());
-  }
-
-  private _getAnnotations(
-    text: string,
-    update: CodeMirror.UpdateLintingCallback,
-    _options: CodeMirror.LintStateOptions,
-    editor: CodeMirror.EditorFromTextArea,
-  ) {
-    let errors: CodeMirror.Annotation[] = [];
-
-    try {
-      if (text && text.length) {
-        parse(text);
-      }
-    } catch (err) {
-      errors = [{
-        from: { line: err.location.start.line, ch: err.location.start.column },
-        to: { line: err.location.start.line, ch: err.location.start.column },
-        message: err.reason,
-      }];
-    }
-
-    update(editor, errors);
+  private _onCursorPositionChange(e: editor.ICursorPositionChangedEvent) {
+    this.cursorChange.emit({
+      column: e.position.column,
+      lineNumber: e.position.lineNumber,
+    });
   }
 }

@@ -24,20 +24,19 @@
     </ng-template>
 
     <ng-template uniTabBody>
-      <uni-vertical-split flex="0 0 75%" [uniContextMenu]="ctxMenuTpl">
+      <uni-vertical-split flex="0 0 75%" [uniContextMenu]="ctxMenuTpl" (flexChange)="onFlexChange()">
         <uni-split-area *ngIf="files[id]?.grid?.editor || files[id]?.grid?.tree || files[id]?.grid?.schema || files[id]?.grid?.ts">
-          <uni-horizontal-split flex="0 0 75%">
+          <uni-horizontal-split flex="0 0 75%" (flexChange)="onFlexChange()">
             <uni-split-area *ngIf="files[id]?.grid?.editor || files[id]?.grid?.tree">
-              <uni-vertical-split flex="0 0 75%">
+              <uni-vertical-split flex="0 0 75%" (flexChange)="onFlexChange()">
                 <uni-split-area *ngIf="files[id]?.grid?.editor">
-                  <uni-scroll>
-                    <luc-json-editor
-                      focus
-                      [ngModel]="files[id]?.text"
-                      (ngModelChange)="onTextChange($event)"
-                      (cursorChange)="cursorChange.emit($event)"
-                    ></luc-json-editor>
-                  </uni-scroll>
+                  <luc-json-editor
+                    *ngIf="id === active"
+                    focus
+                    [ngModel]="files[id]?.text"
+                    (ngModelChange)="onTextChange($event)"
+                    (cursorChange)="cursorChange.emit($event)"
+                  ></luc-json-editor>
                 </uni-split-area>
                 <uni-split-area *ngIf="files[id]?.grid?.tree">
                   <uni-scroll>

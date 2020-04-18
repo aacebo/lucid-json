@@ -1,14 +1,29 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { IUniJsonTreeNode, UniHotkeyService } from '@uniform/components';
-import CodeMirror from 'codemirror';
+import { IPosition } from 'monaco-editor';
 
 import { IFile, IGrid } from '../../resources/file';
+import { JsonEditorComponent } from '../json-editor';
 
 @Component({
   selector: 'luc-files-tab-group',
   templateUrl: './files-tab-group.component.html',
   styleUrls: ['./files-tab-group.component.scss'],
-  host: { class: 'luc-files-tab-group' },
+  host: {
+    class: 'luc-files-tab-group',
+    '(window:resize)': 'onFlexChange()',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -18,8 +33,9 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
   set files(v) {
     this._files = v;
     this._cdr.markForCheck();
+    setTimeout(() => this.onFlexChange());
   }
-  private _files: { [path: string]: IFile } = { };
+  private _files: { [id: string]: IFile } = { };
 
   @Input()
   get ids() { return this._ids; }
@@ -45,7 +61,10 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
   @Output() edit = new EventEmitter<{ id: string; text: string; }>();
   @Output() grid = new EventEmitter<{ id: string; grid: IGrid; }>();
   @Output() save = new EventEmitter<{ id: string; path?: string; text: string; }>();
-  @Output() cursorChange = new EventEmitter<CodeMirror.Position>();
+  @Output() cursorChange = new EventEmitter<IPosition>();
+
+  @ViewChild(JsonEditorComponent)
+  readonly jsonEditor?: JsonEditorComponent;
 
   tab = 0;
 
@@ -82,6 +101,16 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
     }
   }
 
+  onPropertyValueClick(e: IUniJsonTreeNode) {
+    this.clipboard.emit(e.description);
+  }
+
+  onFlexChange() {
+    if (this.jsonEditor) {
+      this.jsonEditor.editor.layout();
+    }
+  }
+
   onClose(e: Event, id: string) {
     e.stopImmediatePropagation();
     e.preventDefault();
@@ -102,10 +131,6 @@ export class FilesTabGroupComponent implements OnInit, OnDestroy {
       nextId,
       dirty: this.files[id].dirty,
     });
-  }
-
-  onPropertyValueClick(e: IUniJsonTreeNode) {
-    this.clipboard.emit(e.description);
   }
 
   private _onSave() {

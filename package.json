@@ -99,6 +99,7 @@
     "js-yaml": "^3.13.1",
     "json-to-ts": "^1.7.0",
     "json2csv": "^5.0.0",
+    "monaco-editor": "^0.20.0",
     "ngrx-etc": "^4.1.0",
     "rxjs": "~6.5.4",
     "to-json-schema": "^0.2.5",

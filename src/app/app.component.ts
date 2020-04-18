@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { UniToastService, UniToastType, UniToastPosition } from '@uniform/components';
 import { take } from 'rxjs/operators';
 import { parse } from 'json2csv';
-import CodeMirror from 'codemirror';
+import { IPosition } from 'monaco-editor';
 
 import { ElectronService } from './core/services/electron';
 import { ISystem, SystemService } from './resources/system';
@@ -100,7 +100,7 @@ export class AppComponent implements OnInit {
     this.fileService.grid(e.id, e.grid);
   }
 
-  onCursorChange(e: CodeMirror.Position) {
+  onCursorChange(e: IPosition) {
     this.editorService.setCursor(e);
   }
 
