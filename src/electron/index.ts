@@ -71,7 +71,7 @@ class App {
     });
 
     if (res.filePath) {
-      electron.ipcMain.once('file.export.return', async (_, e: string) => {
+      electron.ipcMain.handleOnce('file.export.return', async (_, e: string) => {
         if (e) {
           await File.write(res.filePath, e);
         }

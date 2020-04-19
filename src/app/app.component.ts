@@ -51,8 +51,7 @@ export class AppComponent implements OnInit {
       const file = await this.fileService.activeFile$.pipe(take(1)).toPromise();
 
       if (file && file.json) {
-        // _.returnValue = e === 'csv' ? parse(file.json) : file[e];
-        this._electronService.send('file.export.return', e === 'csv' ? parse(file.json) : file[e]);
+        this._electronService.invoke('file.export.return', e === 'csv' ? parse(file.json) : file[e]);
       }
     });
   }
