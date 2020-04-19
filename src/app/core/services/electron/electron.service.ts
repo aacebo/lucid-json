@@ -6,6 +6,7 @@ import {
   MenuItemConstructorOptions,
   Remote,
   MessageBoxOptions,
+  IpcRendererEvent,
 } from 'electron';
 
 @Injectable({
@@ -43,6 +44,14 @@ export class ElectronService {
     this._renderer.send(name, data);
   }
 
+  sendSync<T = any>(name: string, data?: T) {
+    return this._renderer.sendSync(name, data);
+  }
+
+  invoke<T = any>(name: string, data?: T) {
+    return this._renderer.invoke(name, data);
+  }
+
   copy<T = any>(data: T) {
     this._remote.clipboard.write(data);
   }
@@ -54,15 +63,15 @@ export class ElectronService {
     });
   }
 
-  on(name: string, cb: (...args: any[]) => void) {
-    this._renderer.on(name, (_, data: any) => {
-      this._ngZone.run(() => cb(data));
+  on<T = any>(name: string, cb: (e: IpcRendererEvent, data: T) => void) {
+    this._renderer.on(name, (e, data: T) => {
+      this._ngZone.run(() => cb(e, data));
     });
   }
 
-  once(name: string, cb: (...args: any[]) => void) {
-    this._renderer.once(name, (_, data: any) => {
-      this._ngZone.run(() => cb(data));
+  once<T = any>(name: string, cb: (e: IpcRendererEvent, data: T) => void) {
+    this._renderer.once(name, (e, data: T) => {
+      this._ngZone.run(() => cb(e, data));
     });
   }
 

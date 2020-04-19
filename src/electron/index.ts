@@ -57,7 +57,7 @@ class App {
     this._menu.newFile$.subscribe(() => this._window.webContents.send('file.new'));
     this._menu.exportFile$.subscribe(this._onExportFile.bind(this));
 
-    electron.ipcMain.on('file.save', this._onSaveFile.bind(this));
+    electron.ipcMain.handle('file.save', this._onSaveFile.bind(this));
 
     this._window.webContents.on('dom-ready', this._onDomReady.bind(this));
     this._window.on('enter-full-screen', () => this._window.webContents.send('fullscreen', true));
@@ -71,7 +71,7 @@ class App {
     });
 
     if (res.filePath) {
-      electron.ipcMain.once('file.export.return', async (_, e: string) => {
+      electron.ipcMain.handleOnce('file.export.return', async (_, e: string) => {
         if (e) {
           await File.write(res.filePath, e);
         }
@@ -98,10 +98,9 @@ class App {
     }
   }
 
-  private async _onSaveFile(_: electron.IpcMainEvent, e: { path?: string; text: string; }) {
+  private async _onSaveFile(_: electron.IpcMainInvokeEvent, e: { path?: string; text: string; }) {
     if (e.path) {
       await File.write(e.path, e.text);
-      _.sender.send('file.save.return');
       return;
     }
 
@@ -112,10 +111,10 @@ class App {
     if (res.filePath) {
       const name = await File.write(res.filePath, e.text);
 
-      _.sender.send('file.save.return', {
+      return {
         path: res.filePath,
         name,
-      });
+      };
     }
   }
 
