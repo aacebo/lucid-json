@@ -25,15 +25,15 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this._electronService.on('system', (system: ISystem) => {
+    this._electronService.on('system', (_, system: ISystem) => {
       this.systemService.setSystem(system);
     });
 
-    this._electronService.on('fullscreen', (fullscreen: boolean) => {
+    this._electronService.on('fullscreen', (_, fullscreen: boolean) => {
       this.systemService.setFullscreen(fullscreen);
     });
 
-    this._electronService.on('file.open', async (e: IFile) => {
+    this._electronService.on('file.open', async (_, e: IFile) => {
       const paths = await this.fileService.paths$.pipe(take(1)).toPromise();
 
       if (!paths[e.path]) {
@@ -47,10 +47,11 @@ export class AppComponent implements OnInit {
       this.fileService.set();
     });
 
-    this._electronService.on('file.export', async (e: 'csv' | 'ts' | 'yml') => {
+    this._electronService.on('file.export', async (_, e: 'csv' | 'ts' | 'yml') => {
       const file = await this.fileService.activeFile$.pipe(take(1)).toPromise();
 
       if (file && file.json) {
+        // _.returnValue = e === 'csv' ? parse(file.json) : file[e];
         this._electronService.send('file.export.return', e === 'csv' ? parse(file.json) : file[e]);
       }
     });
@@ -84,16 +85,14 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onSave(e: { id: string; path?: string; text: string }) {
-    this._electronService.once('file.save.return', (file?: { path: string; name: string; }) => {
-      if (file) {
-        this.fileService.save(e.id, file.path, file.name, true);
-      } else {
-        this.fileService.save(e.id);
-      }
-    });
+  async onSave(e: { id: string; path?: string; text: string }) {
+    const file: { path: string; name: string; } = await this._electronService.invoke('file.save', { path: e.path, text: e.text });
 
-    this._electronService.send('file.save', { path: e.path, text: e.text });
+    if (file) {
+      this.fileService.save(e.id, file.path, file.name, true);
+    } else {
+      this.fileService.save(e.id);
+    }
   }
 
   onGrid(e: { id: string; grid: IGrid }) {
