@@ -20,6 +20,10 @@ export class FileService {
   readonly activeFile$: Observable<IFile | undefined>;
   readonly lines$: Observable<number>;
   readonly length$: Observable<number>;
+  readonly json$: Observable<any | undefined>;
+  readonly jsonSchema$: Observable<any | undefined>;
+  readonly ts$: Observable<string | undefined>;
+  readonly yml$: Observable<string | undefined>;
 
   constructor(private readonly _store$: Store<IFileState>) {
     this.state$ = this._store$.pipe(select(selectors.selectState));
@@ -30,6 +34,10 @@ export class FileService {
     this.activeFile$ = this._store$.pipe(select(selectors.selectActiveFile));
     this.lines$ = this._store$.pipe(select(selectors.selectLines));
     this.length$ = this._store$.pipe(select(selectors.selectLength));
+    this.json$ = this._store$.pipe(select(selectors.selectJson));
+    this.jsonSchema$ = this._store$.pipe(select(selectors.selectJsonSchema));
+    this.ts$ = this._store$.pipe(select(selectors.selectTs));
+    this.yml$ = this._store$.pipe(select(selectors.selectYml));
   }
 
   set(path?: string, name?: string, text?: string) {

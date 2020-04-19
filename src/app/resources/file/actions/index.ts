@@ -4,5 +4,4 @@ export * from './update.actions';
 export * from './remove.actions';
 export * from './grid.actions';
 export * from './format.actions';
-export * from './generate.actions';
 export * from './save.actions';

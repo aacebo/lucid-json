@@ -1,6 +1,10 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import toJsonSchema from 'to-json-schema';
+import jsonToTs from 'json-to-ts';
+import yamljs from 'js-yaml';
 
 import { IFileState } from './file.state';
+import { tryParseJSON } from './try-parse-json.util';
 
 export const selectState = createFeatureSelector<IFileState>('file');
 export const selectFiles = createSelector(selectState, state => state.files);
@@ -32,4 +36,20 @@ export const selectLength = createSelector(selectState, state => {
   }
 
   return 0;
+});
+
+export const selectJson = createSelector(selectActiveFile, activeFile => {
+  return activeFile ? tryParseJSON(activeFile.text) : undefined;
+});
+
+export const selectJsonSchema = createSelector(selectJson, json => {
+  return json ? toJsonSchema(json) : undefined;
+});
+
+export const selectTs = createSelector(selectJson, json => {
+  return json ? jsonToTs(json).join('\n\n') : undefined;
+});
+
+export const selectYml = createSelector(selectJson, json => {
+  return json ? yamljs.safeDump(json) : undefined;
 });

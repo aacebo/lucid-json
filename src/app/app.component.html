@@ -4,6 +4,10 @@
 
 <ng-container *ngIf="fileService.active$ | async; else splashTpl; let active">
   <luc-files-tab-group
+    [json]="fileService.json$ | async"
+    [jsonSchema]="fileService.jsonSchema$ | async"
+    [ts]="fileService.ts$ | async"
+    [yml]="fileService.yml$ | async"
     [active]="active"
     [ids]="fileService.ids$ | async"
     [files]="fileService.files$ | async"

@@ -41,7 +41,7 @@
                 <uni-split-area *ngIf="files[id]?.grid?.tree">
                   <uni-scroll>
                     <uni-json-tree
-                      [json]="files[id]?.json"
+                      [json]="json"
                       (propertyValueClick)="onPropertyValueClick($event)"
                     ></uni-json-tree>
                   </uni-scroll>
@@ -53,7 +53,7 @@
                 <uni-split-area *ngIf="files[id]?.grid?.schema">
                   <uni-scroll>
                     <uni-json-tree
-                     [json]="files[id]?.schema"
+                     [json]="jsonSchema"
                      (propertyValueClick)="onPropertyValueClick($event)"
                     ></uni-json-tree>
                   </uni-scroll>
@@ -62,7 +62,7 @@
                   <uni-scroll>
                     <uni-code
                       language="typescript"
-                      [code]="files[id]?.ts"
+                      [code]="ts"
                     ></uni-code>
                   </uni-scroll>
                 </uni-split-area>
@@ -74,7 +74,7 @@
           <uni-scroll>
             <uni-code
               language="yaml"
-              [code]="files[id]?.yml"
+              [code]="yml"
             ></uni-code>
           </uni-scroll>
         </uni-split-area>

@@ -48,10 +48,15 @@ export class AppComponent implements OnInit {
     });
 
     this._electronService.on('file.export', async (_, e: 'csv' | 'ts' | 'yml') => {
-      const file = await this.fileService.activeFile$.pipe(take(1)).toPromise();
+      const json = await this.fileService.json$.pipe(take(1)).toPromise();
 
-      if (file && file.json) {
-        this._electronService.invoke('file.export.return', e === 'csv' ? parse(file.json) : file[e]);
+      const map = {
+        ts: await this.fileService.ts$.pipe(take(1)).toPromise(),
+        yml:  await this.fileService.yml$.pipe(take(1)).toPromise(),
+      };
+
+      if (json) {
+        this._electronService.invoke('file.export.return', e === 'csv' ? parse(json) : map[e]);
       }
     });
   }

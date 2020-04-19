@@ -1,6 +1,7 @@
 import { createReducer } from '@ngrx/store';
 import { mutableOn } from 'ngrx-etc';
 
+import { tryParseJSON } from '../../try-parse-json.util';
 import { IFile } from '../../models';
 import * as actions from '../../actions';
 
@@ -26,12 +27,6 @@ export const files = createReducer<{ [path: string]: IFile }>(
   mutableOn(actions.grid, (_, a) => {
     _[a.id].grid = a.grid;
   }),
-  mutableOn(actions.generate, (_, a) => {
-    _[a.id].ts = a.ts;
-    _[a.id].json = a.json;
-    _[a.id].schema = a.schema;
-    _[a.id].yml = a.yml;
-  }),
   mutableOn(actions.save, (_, a) => {
     if (a.saveAs) {
       _[a.id].path = a.path;
@@ -42,11 +37,12 @@ export const files = createReducer<{ [path: string]: IFile }>(
   }),
   mutableOn(actions.format, (_, a) => {
     let text: string;
+    const json = tryParseJSON(_[a.id].text);
 
     if (a.pretty) {
-      text = JSON.stringify(_[a.id].json, undefined, 2);
+      text = JSON.stringify(json, undefined, 2);
     } else {
-      text = JSON.stringify(_[a.id].json);
+      text = JSON.stringify(json);
     }
 
     const dirty = _[a.id].dirty || text !== _[a.id].text;

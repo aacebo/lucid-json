@@ -28,6 +28,11 @@ import { JsonEditorComponent } from '../json-editor';
   encapsulation: ViewEncapsulation.None,
 })
 export class FilesTabGroupComponent implements OnInit, OnDestroy {
+  @Input() json?: any;
+  @Input() jsonSchema?: any;
+  @Input() ts?: string;
+  @Input() yml?: string;
+
   @Input()
   get files() { return this._files; }
   set files(v) {
