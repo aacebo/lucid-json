@@ -90,8 +90,10 @@ export class JsonEditorComponent extends UniFormFieldControlBase<string> impleme
   }
 
   ngAfterViewInit() {
-    this._editor.focus();
-    setTimeout(() => this._editor.layout());
+    setTimeout(() => {
+      this._editor.layout();
+      this._editor.focus();
+    });
   }
 
   ngOnDestroy() {

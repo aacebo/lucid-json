@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UniIconModule, UniPopoverModule } from '@uniform/components';
+import { UniIconModule, UniTooltipModule } from '@uniform/components';
 
 import { ActionbarComponent } from './actionbar.component';
 
@@ -11,7 +11,7 @@ import { ActionbarComponent } from './actionbar.component';
     CommonModule,
 
     UniIconModule,
-    UniPopoverModule,
+    UniTooltipModule,
   ],
 })
 export class ActionbarModule { }
