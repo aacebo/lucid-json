@@ -89,7 +89,7 @@
     "@ngrx/store": "^9.0.0",
     "@ngrx/store-devtools": "^9.0.0",
     "@prantlf/jsonlint": "^10.2.0",
-    "@uniform/components": "^0.0.5-rc.8",
+    "@uniform/components": "^0.0.5-rc.9",
     "ajv": "^6.12.0",
     "codemirror": "^5.52.2",
     "dotenv": "^8.2.0",
