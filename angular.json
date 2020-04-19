@@ -49,7 +49,12 @@
             "assets": [
               "src/.env",
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/min",
+                "output": "/lib/monaco-editor"
+              }
             ],
             "styles": [
               "src/styles.scss",
@@ -59,7 +64,8 @@
               "node_modules/codemirror/theme/yonce.css",
               "node_modules/codemirror/addon/fold/foldgutter.css",
               "node_modules/codemirror/addon/lint/lint.css",
-              "node_modules/codemirror/addon/dialog/dialog.css"
+              "node_modules/codemirror/addon/dialog/dialog.css",
+              "node_modules/monaco-editor/min/vs/editor/editor.main.css"
             ],
             "scripts": [
               "node_modules/codemirror/lib/codemirror.js"

@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
-import CodeMirror from 'codemirror';
+import { IPosition } from 'monaco-editor';
 
 export const setCursor = createAction(
   '[EDITOR] SetCursor',
-  props<{ readonly cursor: CodeMirror.Position }>(),
+  props<{ readonly cursor: IPosition }>(),
 );

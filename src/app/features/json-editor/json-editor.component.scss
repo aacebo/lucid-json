@@ -1,13 +1,5 @@
 .luc-json-editor {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  height: auto;
-
-  .CodeMirror {
-    height: auto;
-    min-height: 100%;
-    width: auto;
-    min-width: 100%;
-  }
+  display: block;
+  height: 100%;
+  width: 100%;
 }

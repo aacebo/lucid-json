@@ -11,6 +11,7 @@ interface NodeModule {
 // declare var window: Window;
 declare var module: NodeModule;
 declare var require: NodeRequire;
+declare var monaco: any;
 
 declare module '@prantlf/jsonlint/lib/validator';
 declare module '@prantlf/jsonlint/lib/printer';
