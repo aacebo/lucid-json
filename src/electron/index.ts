@@ -8,6 +8,8 @@ import * as url from 'url';
 import { AppMenu } from './menu';
 import { File } from './file';
 
+electron.app.allowRendererProcessReuse = true;
+
 dotenv.config({
   debug: dev,
   path: `${__dirname}/../.env`,

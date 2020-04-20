@@ -3,17 +3,19 @@ import * as path from 'path';
 
 export class File {
   static async read(filePath: string) {
+    // const arr: Uint8Array[] = [];
     let text = '';
     const name = path.basename(filePath);
     const stream = fs.createReadStream(filePath);
 
     for await (const chunk of stream) {
+      // arr.push(chunk as Buffer);
       text += chunk;
     }
 
     return {
       name,
-      text,
+      text, // Buffer.concat(arr),
     };
   }
 

@@ -32,7 +32,7 @@ import { SplashModule } from './features/splash';
     StoreModule.forRoot({ }),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,
-      maxAge: 100,
+      maxAge: 10,
     }),
 
     ResourcesModule,

@@ -3,7 +3,6 @@ import {
   App,
   BrowserWindow,
   IpcRenderer,
-  MenuItemConstructorOptions,
   Remote,
   MessageBoxOptions,
   IpcRendererEvent,
@@ -34,10 +33,6 @@ export class ElectronService {
     this._renderer = ipcRenderer;
     this._remote = remote;
     this.app = app;
-  }
-
-  setMenu(options: Array<MenuItemConstructorOptions>) {
-    this._remote.Menu.setApplicationMenu(this._remote.Menu.buildFromTemplate(options));
   }
 
   send<T = any>(name: string, data?: T) {

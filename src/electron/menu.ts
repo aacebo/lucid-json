@@ -10,7 +10,7 @@ export class AppMenu {
 
   private readonly _menu: (MenuItemConstructorOptions | MenuItem)[] = [
     ...(isMac ? [{
-      label: app.getName(),
+      label: app.name,
       submenu: [
         { role: 'about' },
         { type: 'separator' },
