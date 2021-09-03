@@ -95,7 +95,7 @@
     "dotenv": "^8.2.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-is-dev": "^1.1.0",
-    "immer": "^6.0.3",
+    "immer": "^9.0.6",
     "js-yaml": "^3.13.1",
     "json-to-ts": "^1.7.0",
     "json2csv": "^5.0.0",
